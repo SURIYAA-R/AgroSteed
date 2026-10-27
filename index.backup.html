@@ -1,0 +1,4607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Agrosteed Industries Pvt. Ltd — Variant : Stredo</title>
+  <meta name="description" content="Agrosteed Industries Pvt. Ltd manufactures heavy-duty tractor backhoe attachments, excavators, and agricultural earthmoving machinery. Featuring Variant: Stredo.">
+  <meta name="theme-color" content="#111111">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta property="og:title" content="Agrosteed Industries Pvt. Ltd — Variant : Stredo">
+  <meta property="og:description" content="Explore Agrosteed heavy-duty backhoe attachments with clean 3D exploded view, CAD dimension blueprints (Model 1-7), and field videos.">
+  <meta property="og:image" content="favicon.png">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Space Grotesk + Syne + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Pinned CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       BRAND PALETTE & TYPOGRAPHY SYSTEM
+       ========================================================================== */
+    :root {
+      --orange: #F58A1F;
+      --orange-glow: rgba(245, 138, 31, 0.4);
+      --orange-dim: rgba(245, 138, 31, 0.12);
+      --green: #1DAA4F;
+      --green-glow: rgba(29, 170, 79, 0.3);
+      --green-dim: rgba(29, 170, 79, 0.15);
+      --charcoal: #111111;
+      --charcoal-elevated: #16181C;
+      --charcoal-card: #1E2126;
+      --charcoal-border: rgba(255, 255, 255, 0.1);
+      --soft-grey: #F2F2F2;
+      --soft-grey-border: #E2E8F0;
+      --white: #FFFFFF;
+      --txt-primary: #FFFFFF;
+      --txt-secondary: #94A3B8;
+      --txt-muted: #64748B;
+      --txt-dark: #0F172A;
+      --txt-dark-sub: #475569;
+
+      --font-display: 'Syne', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --header-height: 80px;
+      --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: var(--charcoal);
+      color: var(--txt-primary);
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-color: var(--charcoal);
+    }
+
+    img, video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .blueprint-grid-dark {
+      background-image: 
+        linear-gradient(rgba(245, 138, 31, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 138, 31, 0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .blueprint-grid-light {
+      background-color: var(--soft-grey);
+      background-image: 
+        linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ==========================================================================
+       SECTION 1: INTRO (NO BACKGROUND — DISPLAY ONLY AGROSTEED)
+       ========================================================================== */
+    #opening-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background-color: #0b0c0e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      overflow: hidden;
+    }
+
+    #opening-curtain.revealed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-clean-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      max-width: 680px;
+    }
+
+    .intro-only-logo {
+      width: clamp(240px, 46vw, 400px);
+      height: auto;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: introLogoFade 1.3s 0.2s var(--transition-smooth) forwards;
+      filter: drop-shadow(0 12px 36px rgba(245, 138, 31, 0.3));
+    }
+
+    @keyframes introLogoFade {
+      0% { opacity: 0; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .intro-brand-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-top: 1.5rem;
+      line-height: 1.1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: introTextFade 0.8s 0.7s ease forwards;
+    }
+
+    .intro-brand-title span {
+      color: var(--orange);
+    }
+
+    .intro-variant-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(29, 170, 79, 0.4);
+      padding: 6px 18px;
+      border-radius: 30px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: introTextFade 0.8s 1.0s ease forwards;
+    }
+
+    @keyframes introTextFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .intro-skip-btn {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--txt-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 7px 18px;
+      border-radius: 4px;
+      transition: all 0.25s;
+      opacity: 0;
+      animation: introTextFade 0.7s 1.3s ease forwards;
+    }
+    .intro-skip-btn:hover {
+      color: var(--orange);
+      border-color: var(--orange);
+      background: var(--orange-dim);
+    }
+
+    /* ==========================================================================
+       STICKY HEADER
+       ========================================================================== */
+    #site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      z-index: 1000;
+      background: rgba(17, 17, 17, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--charcoal-border);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    #site-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .header-container {
+      max-width: 1440px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo-img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-name-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .brand-title .brand-accent {
+      color: var(--orange);
+    }
+
+    .brand-variant-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--green);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--txt-secondary);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--orange);
+      transition: width 0.25s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--white);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .phone-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--white);
+      background: var(--charcoal-card);
+      border: 1px solid var(--charcoal-border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: border-color 0.2s;
+    }
+
+    .phone-pill:hover {
+      border-color: var(--orange);
+    }
+
+    .btn-quote {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--orange);
+      color: var(--charcoal);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px var(--orange-glow);
+    }
+
+    .btn-quote:hover {
+      background-color: #ffa03b;
+      transform: translateY(-2px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 28px;
+      height: 24px;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--white);
+    }
+
+    #mobile-drawer {
+      display: none;
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: 100%;
+      background: var(--charcoal);
+      border-bottom: 2px solid var(--orange);
+      padding: 1.5rem 2rem;
+      z-index: 999;
+      transform: translateY(-120%);
+      transition: transform 0.35s ease;
+    }
+
+    #mobile-drawer.open {
+      transform: translateY(0);
+    }
+
+    #mobile-drawer .nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+
+    /* ==========================================================================
+       HERO SECTION: BUILT TO MOVE THE EARTH. VARIANT : STREDO. (LIGHT BOLD)
+       ========================================================================== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: calc(var(--header-height) + 2rem) 6vw 4rem;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .hero-top-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(29, 170, 79, 0.12);
+      border: 1px solid var(--green);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6ee798;
+      width: fit-content;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-top-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--green);
+      animation: pulseGreen 2s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero-main-content {
+      max-width: 980px;
+      margin: auto 0;
+    }
+
+    .hero-title-lightbold {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6.5vw, 5.8rem);
+      font-weight: 600; /* LIGHT BOLD as requested */
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.4rem;
+      color: var(--white);
+    }
+
+    .hero-title-lightbold .text-orange {
+      color: var(--orange);
+    }
+
+    .hero-title-lightbold .hero-sub-line {
+      display: block;
+      font-weight: 500;
+      color: #E2E8F0;
+      font-size: 0.75em;
+      letter-spacing: 0.04em;
+      margin-top: 0.2rem;
+    }
+
+    .hero-title-lightbold .hero-sub-line span {
+      color: var(--green);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      color: var(--txt-secondary);
+      max-width: 700px;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+      max-width: 850px;
+    }
+
+    .hero-metric-item {
+      background: rgba(30, 33, 38, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--charcoal-border);
+      border-left: 3px solid var(--orange);
+      padding: 1.1rem 1.3rem;
+      border-radius: 6px;
+    }
+
+    .hero-metric-val {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-metric-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--txt-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    .hero-scroll-cue {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 3rem;
+      cursor: pointer;
+    }
+
+    .mouse-icon {
+      width: 26px;
+      height: 42px;
+      border: 2px solid var(--orange);
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      padding-top: 6px;
+    }
+
+    .mouse-wheel {
+      width: 4px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 2px;
+      animation: wheelBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes wheelBounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(12px); opacity: 0.2; }
+    }
+
+    .scroll-cue-text {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--txt-secondary);
+    }
+
+    /* ==========================================================================
+   SECTION 2: 3D VIEWPORT WITH ZERO INTRUSION & SEPARATE CLEAN VISIBILITY
+   ========================================================================== */
+#models-3d-stage {
+  position: relative;
+  width: 100%;
+  background: #090a0c;
+  overflow: hidden;
+}
+
+#three-viewport-wrap {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 5;
+  display: flex;
+  background: radial-gradient(circle at 50% 50%, #15181f 0%, #090a0c 100%);
+}
+
+/* TOP VIEWPORT BAR: ZERO OVERLAP WITH 3D MACHINE */
+.stage-top-bar {
+  position: absolute;
+  top: calc(var(--header-height) + 0.8rem);
+  left: 3vw;
+  right: 3vw;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.stage-top-bar > * {
+  pointer-events: auto;
+}
+
+.stage-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 17, 21, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--charcoal-border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.stage-brand-pill .pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--orange);
+}
+
+.stage-brand-pill .brand-text {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.stage-brand-pill .variant-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* Central View Mode Switcher: 3D Clean vs Split vs CAD */
+.stage-mode-switcher {
+  display: flex;
+  background: rgba(15, 17, 21, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.stage-mode-btn {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 7px;
+  color: var(--txt-secondary);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+}
+
+.stage-mode-btn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.stage-mode-btn.active {
+  background: var(--orange);
+  color: var(--charcoal);
+  font-weight: 700;
+  box-shadow: 0 2px 14px var(--orange-glow);
+}
+
+.stage-top-metrics {
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 17, 21, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--charcoal-border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--txt-secondary);
+}
+
+.stage-top-metrics span {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* PANES: 3D CANVASES & DEDICATED CAD SPLIT VIEW */
+.stage-3d-pane {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  transition: width 0.4s var(--transition-smooth);
+}
+
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Split View Mode: 50% Clean 3D + 50% Separated CAD Dimensions */
+#three-viewport-wrap.split-active .stage-3d-pane {
+  width: 50%;
+  flex: 0 0 50%;
+  border-right: 1px solid var(--charcoal-border);
+}
+
+.stage-cad-pane {
+  display: none;
+  width: 50%;
+  flex: 0 0 50%;
+  height: 100%;
+  background: #0b0c10;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding: calc(var(--header-height) + 4rem) 2.5vw 2.5rem;
+  overflow-y: auto;
+  flex-direction: column;
+  z-index: 10;
+}
+
+#three-viewport-wrap.split-active .stage-cad-pane {
+  display: flex;
+}
+
+/* BOTTOM 3D CONTROLLER TOOLBAR: ZERO INTRUSION ON MACHINE */
+.stage-floating-toolbar {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  background: rgba(15, 17, 21, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  max-width: 90vw;
+  flex-wrap: wrap;
+}
+
+.toolbar-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-slider-group label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--txt-secondary);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.toolbar-scrubber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 140px;
+  height: 4px;
+  background: #2a2e36;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.toolbar-scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--orange);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--orange);
+  transition: transform 0.15s;
+}
+
+.toolbar-scrubber::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-tool-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--txt-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toolbar-tool-btn:hover, .toolbar-tool-btn.active {
+  color: var(--orange);
+  border-color: var(--orange);
+  background: var(--orange-dim);
+}
+
+.toolbar-telemetry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  border-left: 1px solid var(--charcoal-border);
+  padding-left: 14px;
+  white-space: nowrap;
+}
+
+/* CAD DIMENSION WORKSPACE STYLING (MODELS 1 - 7) */
+.cad-studio-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cad-tabs-nav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cad-tab-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--txt-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cad-tab-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+.cad-tab-item.active {
+  background: var(--orange);
+  color: var(--charcoal);
+  border-color: var(--orange);
+  font-weight: 700;
+  box-shadow: 0 2px 10px var(--orange-glow);
+}
+
+.cad-display-card {
+  background: #111317;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.cad-display-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cad-display-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cad-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cad-main-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.cad-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cad-zoom-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.cad-zoom-btn:hover {
+  background: var(--orange);
+  color: var(--charcoal);
+}
+
+.cad-canvas-frame {
+  position: relative;
+  background: #07080a;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.cad-canvas-frame img {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+  user-select: none;
+}
+
+.cad-desc-text {
+  padding: 10px 16px;
+  font-size: 0.84rem;
+  color: var(--txt-secondary);
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cad-specs-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.cad-spec-chip {
+  background: #15181e;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.cad-spec-chip.accent-orange {
+  border-left-color: var(--orange);
+}
+
+.cad-spec-val {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.cad-spec-lbl {
+  font-size: 0.68rem;
+  color: var(--txt-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.cad-action-btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.cad-action-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cad-action-btn.btn-orange {
+  background: var(--orange);
+  color: var(--charcoal);
+  border: none;
+}
+
+.cad-action-btn.btn-orange:hover {
+  background: #ffa13e;
+}
+
+.cad-action-btn.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+
+.cad-action-btn.btn-outline:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.model-scroll-track {
+  position: relative;
+  height: 350vh;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  #three-viewport-wrap.split-active {
+    flex-direction: column;
+  }
+  #three-viewport-wrap.split-active .stage-3d-pane {
+    width: 100%;
+    height: 50vh;
+    flex: none;
+  }
+  .stage-cad-pane {
+    width: 100%;
+    height: 50vh;
+    flex: none;
+    padding: 1.5rem;
+  }
+  .stage-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .stage-floating-toolbar {
+    bottom: 1rem;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+  .toolbar-scrubber {
+    width: 100px;
+  }
+}
+
+/* ==========================================================================
+   SECTION 4: FEATURED VIDEO & IMMERSIVE FLOATING MEDIA STREAM (LEFT TO RIGHT)
+   ========================================================================== */
+#tested-in-field {
+  position: relative;
+  background-color: var(--soft-grey);
+  padding: 6rem 0 5rem;
+  overflow: hidden;
+}
+
+#tested-in-field .section-header-wrap {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 0 6vw;
+  text-align: center;
+}
+
+/* Featured Video Container & Player */
+.featured-video-container {
+  max-width: 1240px;
+  margin: 0 auto 4rem;
+  padding: 0 4vw;
+}
+
+.featured-video-card {
+  background: #111317;
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.video-player-box {
+  background: #000;
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-player-box video {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.video-info-box {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--white);
+  background: #15181e;
+}
+
+.video-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange-dim);
+  color: var(--orange);
+  border: 1px solid rgba(245, 138, 31, 0.3);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 5px 14px;
+  margin-bottom: 1rem;
+  width: fit-content;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.video-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.video-desc {
+  color: var(--txt-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 1.8rem;
+}
+
+.video-specs-inline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.4rem;
+}
+
+.vspec-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.vspec-val {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.vspec-lbl {
+  font-size: 0.68rem;
+  color: var(--txt-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   FLOATING MEDIA STREAM (FLOWING CONTINUOUSLY FROM LEFT TO RIGHT)
+   ========================================================================== */
+.floating-stream-section-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  padding: 0 4vw;
+}
+
+.stream-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--orange);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.stream-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--txt-dark);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.stream-subtitle {
+  color: var(--txt-dark-sub);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.media-marquee-container {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow: hidden;
+  padding: 2.2rem 0 3.2rem;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.media-marquee-track {
+  display: flex;
+  gap: 26px;
+  width: max-content;
+  /* Animates from -50% to 0% = FLOATS CONTINUOUSLY FROM LEFT TO RIGHT */
+  animation: floatStreamLeftToRight 50s linear infinite;
+  will-change: transform;
+}
+
+.media-marquee-container:hover .media-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Left-to-Right Floating Keyframe */
+@keyframes floatStreamLeftToRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Subtle Organic Floating Bobbing Animation */
+@keyframes cardFloatBob {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Individual Floating Media Cards */
+.zoom-media-card {
+  flex: 0 0 340px;
+  width: 340px;
+  height: 385px;
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  animation: cardFloatBob 5.5s ease-in-out infinite;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  user-select: none;
+}
+
+/* Staggered Floating Offsets for Organic Waves */
+.zoom-media-card:nth-child(2n) {
+  animation-delay: -1.8s;
+  animation-duration: 6.2s;
+}
+
+.zoom-media-card:nth-child(3n) {
+  animation-delay: -3.4s;
+  animation-duration: 5.8s;
+}
+
+.zoom-media-card:nth-child(4n) {
+  animation-delay: -4.6s;
+  animation-duration: 6.8s;
+}
+
+.zoom-media-card:hover {
+  transform: translateY(-16px) scale(1.03) !important;
+  border-color: var(--orange);
+  box-shadow: 0 24px 50px rgba(245, 138, 31, 0.22);
+}
+
+.zoom-media-frame {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  overflow: hidden;
+  background: #090a0c;
+}
+
+.zoom-media-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--transition-smooth);
+}
+
+.zoom-media-card:hover .zoom-media-frame img {
+  transform: scale(1.1);
+}
+
+.zoom-media-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  background: rgba(17, 17, 17, 0.88);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.zoom-click-hint {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 6;
+}
+
+.zoom-media-card:hover .zoom-click-hint {
+  opacity: 1;
+}
+
+.zoom-card-body {
+  padding: 16px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+}
+
+.zoom-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--txt-dark);
+  text-transform: uppercase;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.zoom-card-desc {
+  font-size: 0.82rem;
+  color: var(--txt-dark-sub);
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.zoom-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--orange);
+  font-weight: 600;
+  text-transform: uppercase;
+  padding-top: 10px;
+  margin-top: 8px;
+  border-top: 1px solid var(--soft-grey-border);
+}
+
+/* ALL IMAGES & CAD DIMENSIONS LABELED GALLERY GRID */
+    .labeled-gallery-section {
+      max-width: 1280px;
+      margin: 4rem auto 0;
+      padding: 0 6vw;
+    }
+
+    .gallery-grid-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--txt-dark);
+    }
+
+    .gallery-grid-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 24px;
+      background: var(--orange);
+      border-radius: 2px;
+    }
+
+    .all-images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.6rem;
+    }
+
+    .labeled-image-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--soft-grey-border);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .labeled-image-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+      border-color: var(--orange);
+    }
+
+    .labeled-image-thumb {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background-color: #0b0c0e;
+    }
+
+    .labeled-image-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .labeled-image-card:hover .labeled-image-thumb img {
+      transform: scale(1.08);
+    }
+
+    .labeled-image-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(17, 17, 17, 0.88);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .labeled-image-info {
+      padding: 1.2rem;
+    }
+
+    .labeled-image-name {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--txt-dark);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+
+    .labeled-image-label-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--orange);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Customer Feedback Grid */
+    .feedback-outer-wrap {
+      max-width: 1280px;
+      margin: 4rem auto 0;
+      padding: 0 6vw;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .feedback-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 2.2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--soft-grey-border);
+      border-top: 4px solid var(--orange);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feedback-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 1rem;
+      color: var(--orange);
+      font-size: 1.15rem;
+    }
+
+    .feedback-quote {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--txt-dark-sub);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .feedback-author-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-top: 1px solid var(--soft-grey-border);
+      padding-top: 1rem;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--charcoal);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .author-info h4 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--txt-dark);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .author-info p {
+      font-size: 0.78rem;
+      color: var(--txt-dark-sub);
+    }
+
+    .author-badge {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       SECTION 4: REQUIREMENTS FORM
+       ========================================================================== */
+    #requirements-section {
+      position: relative;
+      z-index: 20;
+      background-color: var(--charcoal);
+      padding: 7rem 6vw;
+      border-top: 1px solid var(--charcoal-border);
+    }
+
+    .req-container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .form-wrapper-card {
+      background: var(--charcoal-elevated);
+      border: 1px solid var(--charcoal-border);
+      border-radius: 14px;
+      padding: clamp(2rem, 5vw, 4rem);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-wrapper-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--orange));
+    }
+
+    .req-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--txt-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .form-label .req-star {
+      color: var(--orange);
+    }
+
+    .form-control {
+      width: 100%;
+      background: var(--charcoal-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 13px 15px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--white);
+      transition: all 0.25s ease;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-glow);
+    }
+
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F58A1F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-error-msg {
+      font-size: 0.75rem;
+      color: #ff5555;
+      display: none;
+    }
+
+    .has-error .form-control {
+      border-color: #ff5555;
+    }
+
+    .has-error .form-error-msg {
+      display: block;
+    }
+
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit-main {
+      flex: 1;
+      min-width: 240px;
+      background: var(--orange);
+      color: var(--charcoal);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px var(--orange-glow);
+    }
+
+    .btn-submit-main:hover {
+      background: #ffa03b;
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp-direct {
+      flex: 1;
+      min-width: 240px;
+      background: #25D366;
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-whatsapp-direct:hover {
+      background: #2ee672;
+      transform: translateY(-2px);
+    }
+
+    .form-success-banner {
+      display: none;
+      background: rgba(29, 170, 79, 0.15);
+      border: 1px solid var(--green);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .form-success-banner.active {
+      display: block;
+    }
+
+    .form-success-banner h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: #5ef396;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ==========================================================================
+       SECTION 5: CONTACT & FOOTER
+       ========================================================================== */
+    #contact-section {
+      position: relative;
+      z-index: 20;
+      background-color: var(--charcoal-elevated);
+      padding: 6rem 6vw 3rem;
+      border-top: 1px solid var(--charcoal-border);
+    }
+
+    .contact-layout-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      max-width: 1280px;
+      margin: 0 auto 5rem;
+    }
+
+    .contact-info-col h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-info-col h2 span {
+      color: var(--orange);
+    }
+
+    .contact-info-desc {
+      color: var(--txt-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2.2rem;
+    }
+
+    .contact-details-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .contact-item-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .contact-icon-pill {
+      width: 44px;
+      height: 44px;
+      background: var(--charcoal-card);
+      border: 1px solid var(--orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+
+    .contact-item-text h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--txt-secondary);
+      margin-bottom: 2px;
+    }
+
+    .contact-item-text p, .contact-item-text a {
+      font-size: 1.05rem;
+      color: var(--white);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .contact-item-text a:hover {
+      color: var(--orange);
+    }
+
+    .map-embed-wrapper {
+      position: relative;
+      background: var(--charcoal);
+      border: 1px solid var(--charcoal-border);
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.8rem;
+    }
+
+    .map-bg-blueprint {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 60% 40%, rgba(245, 138, 31, 0.15), transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      z-index: 1;
+    }
+
+    .radar-ping {
+      position: absolute;
+      top: 48%;
+      left: 54%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 22px;
+      height: 22px;
+      background: var(--orange);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--orange);
+    }
+
+    .radar-ping::after {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border: 2px solid var(--orange);
+      border-radius: 50%;
+      animation: pingExpand 2.2s infinite;
+    }
+
+    @keyframes pingExpand {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    .map-info-badge {
+      position: relative;
+      z-index: 3;
+      background: rgba(17, 17, 17, 0.92);
+      border: 1px solid var(--orange);
+      padding: 12px 18px;
+      border-radius: 8px;
+      max-width: 320px;
+    }
+
+    .map-info-badge h5 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .map-info-badge p {
+      font-size: 0.78rem;
+      color: var(--txt-secondary);
+      margin-top: 2px;
+    }
+
+    .btn-directions {
+      position: relative;
+      z-index: 3;
+      align-self: flex-start;
+      background: var(--orange);
+      color: var(--charcoal);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-directions:hover {
+      background: #ffa03b;
+      transform: translateY(-2px);
+    }
+
+    .site-footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 3rem;
+      border-top: 1px solid var(--charcoal-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-brand img {
+      height: 48px;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--txt-muted);
+    }
+
+    .footer-links-row {
+      display: flex;
+      gap: 1.8rem;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--txt-secondary);
+    }
+
+    .footer-links-row a:hover {
+      color: var(--orange);
+    }
+
+    /* MODAL: LIGHTBOX WITH PROMINENT CLICK-NAME LABELS */
+    #lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: rgba(11, 12, 14, 0.96);
+      backdrop-filter: blur(16px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    #lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 980px;
+      width: 100%;
+      text-align: center;
+      background: var(--charcoal-elevated);
+      border: 1px solid var(--orange);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-header-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--green);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .lightbox-title-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      line-height: 1.1;
+    }
+
+    .lightbox-media-wrapper {
+      max-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+      margin: 0 auto;
+    }
+
+    .lightbox-media-wrapper img, .lightbox-media-wrapper video {
+      max-height: 65vh;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-caption-text {
+      margin-top: 1.2rem;
+      font-size: 0.92rem;
+      color: var(--txt-secondary);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      color: var(--txt-secondary);
+      font-size: 2.2rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--orange);
+    }
+
+    @media (max-width: 900px) {
+      .featured-video-card {
+        grid-template-columns: 1fr;
+      }
+      .video-player-box {
+        min-height: 260px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .phone-pill {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      #mobile-drawer {
+        display: block;
+      }
+      .model-info-docked-panel {
+        left: 3vw;
+        right: 3vw;
+        width: auto;
+        bottom: 2vh;
+        max-height: 48vh;
+      }
+      .req-form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-submit-row {
+        flex-direction: column;
+      }
+      .btn-submit-main, .btn-whatsapp-direct {
+        width: 100%;
+      }
+      #progress-rail {
+        display: none;
+      }
+      #part-detail-drawer {
+        width: 100%;
+      }
+      .contact-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="blueprint-grid-dark">
+
+  <!-- ========================================================================
+       SECTION 1: INTRO SEQUENCE (NO BG — DISPLAY ONLY AGROSTEED)
+       ======================================================================== -->
+  <div id="opening-curtain" role="dialog" aria-modal="true" aria-label="Welcome to Agrosteed Industries Pvt. Ltd">
+    <div class="intro-clean-wrap">
+      <img src="logo-dark-bg.png" alt="Agrosteed Industries Pvt. Ltd" class="intro-only-logo" onerror="this.src='favicon.png'">
+      <h1 class="intro-brand-title">AGROSTEED <span>INDUSTRIES</span></h1>
+      <div class="intro-variant-badge">Pvt. Ltd • Variant : Stredo</div>
+      <button class="intro-skip-btn" onclick="skipOpeningCurtain()">Enter Experience &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       STICKY HEADER
+       ======================================================================== -->
+  <header id="site-header" role="banner">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo-link" aria-label="Agrosteed Industries Home">
+        <img src="logo-dark-bg.png" alt="Agrosteed Industries Pvt. Ltd" class="brand-logo-img" onerror="this.src='favicon.png'">
+        <div class="brand-name-wrap">
+          <span class="brand-title">AGROSTEED <span class="brand-accent">INDUSTRIES</span></span>
+          <span class="brand-variant-tag">Variant : Stredo</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" role="navigation" aria-label="Primary Navigation">
+        <a href="#hero" class="nav-link active">Overview</a>
+        <a href="#models-3d-stage" class="nav-link">Variant : Stredo 3D</a>
+        <a href="#cad-dimensions-section" class="nav-link">CAD Dimensions (M1-7)</a>
+        <a href="#tested-in-field" class="nav-link">Field Trials &amp; Media</a>
+        <a href="#requirements-section" class="nav-link">Requirements</a>
+        <a href="#contact-section" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+918608962057" class="phone-pill" title="Engineering Hotline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          +91 8608962057
+        </a>
+        <a href="#requirements-section" class="btn-quote">Get a Quote</a>
+        <button class="mobile-menu-btn" aria-label="Toggle Mobile Menu" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <nav class="nav-links">
+      <a href="#hero" class="nav-link" onclick="toggleMobileMenu()">Overview</a>
+      <a href="#models-3d-stage" class="nav-link" onclick="toggleMobileMenu()">Variant : Stredo 3D</a>
+      <a href="#cad-dimensions-section" class="nav-link" onclick="toggleMobileMenu()">CAD Dimensions (M1-7)</a>
+      <a href="#tested-in-field" class="nav-link" onclick="toggleMobileMenu()">Field Trials &amp; Media</a>
+      <a href="#requirements-section" class="nav-link" onclick="toggleMobileMenu()">Requirements</a>
+      <a href="#contact-section" class="nav-link" onclick="toggleMobileMenu()">Contact</a>
+      <a href="tel:+918608962057" style="color:var(--orange);font-weight:700;margin-top:0.5rem;">CALL: +91 8608962057</a>
+    </nav>
+  </div>
+
+  <main id="main-content">
+    <!-- ======================================================================
+         HERO SECTION: BUILT TO MOVE THE EARTH. VARIANT : STREDO. (LIGHT BOLD)
+         ====================================================================== -->
+    <section id="hero" aria-label="Hero Overview">
+      <div>
+        <div class="hero-top-badge">
+          <span class="dot"></span>
+          Agrosteed Industries Pvt. Ltd • Direct Manufacturer
+        </div>
+        <div class="hero-main-content">
+          <!-- Light Bold Headline Requested -->
+          <h1 class="hero-title-lightbold">
+            BUILT TO <span class="text-orange">MOVE THE EARTH.</span>
+            <span class="hero-sub-line">VARIANT : <span>STREDO.</span></span>
+          </h1>
+          <p class="hero-subtitle">
+            Agrosteed Industries Pvt. Ltd manufactures heavy-duty tractor backhoe attachments, loaders, and earthmoving solutions engineered for farmers, irrigation networks, and commercial contractors across India.
+          </p>
+
+          <div class="hero-metrics-grid">
+            <div class="hero-metric-item">
+              <div class="hero-metric-val">210 <span style="font-size:1.1rem;color:var(--orange)">BAR</span></div>
+              <div class="hero-metric-lbl">High-Pressure Hydraulics</div>
+            </div>
+            <div class="hero-metric-item">
+              <div class="hero-metric-val">STREDO</div>
+              <div class="hero-metric-lbl">Heavy Duty Field Variant</div>
+            </div>
+            <div class="hero-metric-item">
+              <div class="hero-metric-val">15 <span style="font-size:1.1rem;color:var(--orange)">MIN</span></div>
+              <div class="hero-metric-lbl">3-Point Tractor Linkage</div>
+            </div>
+            <div class="hero-metric-item">
+              <div class="hero-metric-val">100%</div>
+              <div class="hero-metric-lbl">In-House CAD Fabricated</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll-cue" onclick="scrollTo3DStage()" role="button" tabindex="0" aria-label="Scroll to 3D Exploded View">
+        <div class="mouse-icon">
+          <div class="mouse-wheel"></div>
+        </div>
+        <span class="scroll-cue-text">Scroll to inspect 3D exploded engineering</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: 3D MODELS WITH NO INTRUSION & SEPARATED CLEAN VISIBILITY
+         ====================================================================== -->
+    <!-- ======================================================================
+     SECTION 2: 3D MODELS WITH ZERO INTRUSION & SEPARATED CLEAN VISIBILITY
+     ====================================================================== -->
+<section id="models-3d-stage" aria-label="3D Model Viewer & Exploded Architecture">
+  <div id="three-viewport-wrap">
+    
+    <!-- TOP BAR: MODE SWITCHER & TELEMETRY (CLEAN, NO MACHINE COLLISION) -->
+    <div class="stage-top-bar">
+      <div class="stage-brand-pill">
+        <span class="pulse-dot"></span>
+        <span class="brand-text">AGROSTEED</span>
+        <span class="variant-text">VARIANT : STREDO (HS-2T)</span>
+      </div>
+
+      <!-- Mode Switcher: 3D Clean Model vs Split View vs CAD Blueprints -->
+      <div class="stage-mode-switcher" role="tablist" aria-label="Inspection Modes">
+        <button class="stage-mode-btn active" id="btn-mode-3d" onclick="setStageViewMode('3d-clean')" title="Unobstructed Fullscreen 3D Model">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          3D Clean Model
+        </button>
+        <button class="stage-mode-btn" id="btn-mode-split" onclick="setStageViewMode('split')" title="Side-by-Side: 3D Model & CAD Dimensions with Zero Intrusion">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+          Split: 3D + CAD Dimensions
+        </button>
+        <button class="stage-mode-btn" id="btn-mode-cad" onclick="scrollToCADSection()" title="Full Precision CAD Blueprint Studio">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          CAD Blueprints (M1-7)
+        </button>
+      </div>
+
+      <div class="stage-top-metrics">
+        <div>DIG: <span>2.85 M</span></div>
+        <div>REACH: <span>3.85 M</span></div>
+        <div>PRESS: <span>210 BAR</span></div>
+      </div>
+    </div>
+
+    <!-- PANE 1: 100% CLEAN, UNOBSTRUCTED 3D STAGE -->
+    <div class="stage-3d-pane" id="stage-3d-pane">
+      <canvas id="three-canvas" aria-label="Interactive High-Clarity 3D View of Agrosteed Stredo"></canvas>
+      
+      <!-- SLEEK BOTTOM CONTROLLER (NEVER BLOCKS EXCAVATOR MESH) -->
+      <div class="stage-floating-toolbar">
+        <div class="toolbar-slider-group">
+          <label for="scrub-explode-slider">Exploded View</label>
+          <input type="range" id="scrub-explode-slider" class="toolbar-scrubber" min="0" max="100" value="0" oninput="onExplodeSliderInput(this.value)">
+          <span id="scrub-val-pct" style="font-family:var(--font-mono);font-size:0.75rem;color:var(--orange);font-weight:700;width:34px;">0%</span>
+        </div>
+
+        <div class="toolbar-actions">
+          <button class="toolbar-tool-btn" id="btn-auto-rotate" onclick="toggleAutoRotate()" title="Toggle Continuous 360 Rotation">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Rotate
+          </button>
+          <button class="toolbar-tool-btn" onclick="reset3DCamera()" title="Reset Camera Perspective">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+            Reset
+          </button>
+          <button class="toolbar-tool-btn" id="btn-wireframe" onclick="toggleWireframe()" title="Toggle CAD Wireframe Mesh">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Wireframe
+          </button>
+        </div>
+
+        <div class="toolbar-telemetry" id="part-telemetry-badge">
+          <span>●</span> <span id="telemetry-txt">STATUS: ASSEMBLED // DRAG TO ROTATE 3D MACHINE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANE 2: SEPARATED DEDICATED CAD SPLIT VIEW (MODELS 1 - 7) -->
+    <div class="stage-cad-pane" id="stage-cad-pane">
+      <div class="cad-studio-box">
+        
+        <!-- Model 1 to 7 Quick Switcher Tabs -->
+        <div class="cad-tabs-nav" id="split-cad-tabs" role="tablist">
+          <button class="cad-tab-item active" onclick="selectCADModel(0, 'split')">M1: Subframe</button>
+          <button class="cad-tab-item" onclick="selectCADModel(1, 'split')">M2: Kinematics</button>
+          <button class="cad-tab-item" onclick="selectCADModel(2, 'split')">M3: Top Plan</button>
+          <button class="cad-tab-item" onclick="selectCADModel(3, 'split')">M4: Side Reach</button>
+          <button class="cad-tab-item" onclick="selectCADModel(4, 'split')">M5: Outriggers</button>
+          <button class="cad-tab-item" onclick="selectCADModel(5, 'split')">M6: Assembly</button>
+          <button class="cad-tab-item" onclick="selectCADModel(6, 'split')">M7: Slew Hub</button>
+        </div>
+
+        <!-- CAD Display Card -->
+        <div class="cad-display-card">
+          <div class="cad-display-header">
+            <div class="cad-display-title-wrap">
+              <span class="cad-badge" id="split-cad-badge">CAD DIMENSION BLUEPRINT</span>
+              <h3 class="cad-main-title" id="split-cad-title">Model 1: 3-Point Hitch Subframe</h3>
+            </div>
+            <div class="cad-zoom-controls">
+              <button class="cad-zoom-btn" onclick="zoomCADBlueprint('split', -0.2)" title="Zoom Out">-</button>
+              <button class="cad-zoom-btn" onclick="zoomCADBlueprint('split', 0.2)" title="Zoom In">+</button>
+              <button class="cad-zoom-btn" onclick="zoomCADBlueprint('split', 0)" title="Reset Zoom">⟲</button>
+            </div>
+          </div>
+
+          <div class="cad-canvas-frame">
+            <img id="split-cad-img" src="MODEL1.jpeg" alt="CAD Dimension Blueprint">
+          </div>
+
+          <p class="cad-desc-text" id="split-cad-desc">
+            Rigid tractor-locking subframe distributing mechanical digging loads directly into the tractor rear axle housing, bypassing 3-point lift arm strain.
+          </p>
+        </div>
+
+        <!-- 6-Matrix Engineering Specifications -->
+        <div class="cad-specs-matrix" id="split-cad-specs">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <div class="cad-action-btn-row">
+          <button class="cad-action-btn btn-orange" onclick="preselectModelInForm()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Enquire On This Model
+          </button>
+          <button class="cad-action-btn btn-outline" onclick="openActiveCADInLightbox('split')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+            Full High-Res
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scroll Track for continuous GSAP Exploded Scrubbing -->
+  <div class="model-scroll-track" id="scroll-track-trigger"></div>
+</section>
+
+<!-- ======================================================================
+     SECTION 3: PRECISION CAD DIMENSIONS STUDIO (MODEL 1 - 7)
+     ====================================================================== -->
+<section id="cad-dimensions-section" class="blueprint-grid-dark" style="padding:6rem 6vw 5rem;border-top:1px solid var(--charcoal-border);">
+  <div class="section-header-wrap" style="padding:0;max-width:960px;margin-bottom:3rem;">
+    <span class="section-eyebrow">PRECISION ORTHOGRAPHIC ENGINEERING BLUEPRINTS</span>
+    <h2 style="font-family:var(--font-display);font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:700;color:var(--white);text-transform:uppercase;line-height:1.1;margin-bottom:1rem;">
+      PRECISION CAD DIMENSIONS <span style="color:var(--orange);">(MODEL 1 – 7)</span>
+    </h2>
+    <p style="color:var(--txt-secondary);font-size:1.05rem;line-height:1.6;">
+      Inspect direct factory CAD engineering drawings for Agrosteed Variant : Stredo. Engineered for 45HP to 90HP tractors, these orthographic blueprints define mounting tolerances, articulation arcs, 2.85m max digging depths, and 210 BAR hydraulic ratings.
+    </p>
+  </div>
+
+  <!-- MAIN INTERACTIVE CAD BLUEPRINT VIEWER SUITE -->
+  <div style="background:#111419;border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:2rem;margin-bottom:3.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+    
+    <!-- 7 Model Switcher Tabs Bar -->
+    <div class="cad-tabs-nav" id="main-cad-tabs" role="tablist" style="margin-bottom:1.5rem;overflow-x:auto;">
+      <button class="cad-tab-item active" onclick="selectCADModel(0, 'main')">Model 1: Subframe Bracket</button>
+      <button class="cad-tab-item" onclick="selectCADModel(1, 'main')">Model 2: Articulation Arc</button>
+      <button class="cad-tab-item" onclick="selectCADModel(2, 'main')">Model 3: Overhead Plan</button>
+      <button class="cad-tab-item" onclick="selectCADModel(3, 'main')">Model 4: Side Elevation & Reach</button>
+      <button class="cad-tab-item" onclick="selectCADModel(4, 'main')">Model 5: Outrigger Stance</button>
+      <button class="cad-tab-item" onclick="selectCADModel(5, 'main')">Model 6: Isometric Assembly</button>
+      <button class="cad-tab-item" onclick="selectCADModel(6, 'main')">Model 7: Slew Hub & Pivot</button>
+    </div>
+
+    <!-- Active Blueprint Layout: Two Columns (Image Left / Specs Right) -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:2rem;align-items:center;">
+      
+      <!-- Interactive Zoomable Canvas Frame -->
+      <div style="background:#07080a;border:1px solid rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;position:relative;">
+        <div style="position:absolute;top:12px;right:12px;z-index:10;display:flex;gap:4px;">
+          <button class="cad-zoom-btn" onclick="zoomCADBlueprint('main', -0.2)" title="Zoom Out">-</button>
+          <button class="cad-zoom-btn" onclick="zoomCADBlueprint('main', 0.2)" title="Zoom In">+</button>
+          <button class="cad-zoom-btn" onclick="zoomCADBlueprint('main', 0)" title="Reset Zoom">⟲</button>
+          <button class="cad-zoom-btn" onclick="openActiveCADInLightbox('main')" title="View Fullscreen" style="width:auto;padding:0 8px;font-size:0.75rem;">Full-Res</button>
+        </div>
+
+        <div style="height:420px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;" id="main-cad-frame">
+          <img id="main-cad-img" src="MODEL1.jpeg" alt="Precision CAD Dimension Blueprint" style="max-height:92%;max-width:92%;object-fit:contain;transition:transform 0.25s ease;">
+        </div>
+      </div>
+
+      <!-- Detail Specs & Callouts -->
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <span class="cad-badge" id="main-cad-badge" style="font-size:0.78rem;">MODEL 1 // 3-POINT HITCH GEOMETRY</span>
+        <h3 id="main-cad-title" style="font-family:var(--font-display);font-size:clamp(1.4rem,2.2vw,2rem);font-weight:700;color:var(--white);text-transform:uppercase;margin:0.4rem 0 0.8rem;line-height:1.2;">
+          Model 1: 3-Point Hitch Subframe & Mounting Geometry
+        </h3>
+        <p id="main-cad-desc" style="color:var(--txt-secondary);font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;">
+          Rigid tractor-locking subframe distributing mechanical digging loads directly into the tractor rear axle housing, preventing 3-point lift float and protecting tractor hydraulic lift arms.
+        </p>
+
+        <!-- 6 Matrix Metrics Chips -->
+        <div class="cad-specs-matrix" id="main-cad-specs" style="grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:10px;margin-bottom:1.5rem;">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-quote" onclick="preselectModelInForm()" style="padding:12px 22px;">
+            Get Custom Quotation
+          </button>
+          <a href="tel:+918608962057" class="btn-brochure" style="padding:12px 20px;">
+            Speak with Engineer (+91 8608962057)
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ALL 7 CAD DIMENSION MODELS GALLERY GRID -->
+  <h3 class="gallery-grid-title" style="color:var(--white);margin-bottom:1.5rem;">
+    ORHTOGRAPHIC BLUEPRINT OVERVIEW (MODELS 1 – 7)
+  </h3>
+  <div class="all-images-grid">
+    
+    <!-- Model 1 -->
+    <div class="labeled-image-card" onclick="selectCADModel(0, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL1.jpeg" alt="MODEL1.jpeg - Subframe Bracket">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 1</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 1: 3-Point Subframe Bracket</h4>
+        <div class="labeled-image-label-tag"><span>●</span> CAT-II / CAT-III Standard Hitch</div>
+      </div>
+    </div>
+
+    <!-- Model 2 -->
+    <div class="labeled-image-card" onclick="selectCADModel(1, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL2.jpeg" alt="MODEL2.jpeg - Articulation">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 2</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 2: Articulation Kinematics</h4>
+        <div class="labeled-image-label-tag"><span>●</span> Full 180° Articulation Arc</div>
+      </div>
+    </div>
+
+    <!-- Model 3 -->
+    <div class="labeled-image-card" onclick="selectCADModel(2, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL3.jpeg" alt="MODEL3.jpeg - Overhead Plan">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 3</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 3: Overhead Trench Plan</h4>
+        <div class="labeled-image-label-tag"><span>●</span> Trench Width: 450 mm Alignment</div>
+      </div>
+    </div>
+
+    <!-- Model 4 -->
+    <div class="labeled-image-card" onclick="selectCADModel(3, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL4.jpeg" alt="MODEL4.jpeg - Side Elevation">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 4</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 4: Side Elevation & Depths</h4>
+        <div class="labeled-image-label-tag"><span>●</span> Dig Depth: 2.85m • Reach: 3.85m</div>
+      </div>
+    </div>
+
+    <!-- Model 5 -->
+    <div class="labeled-image-card" onclick="selectCADModel(4, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL5.jpeg" alt="MODEL5.jpeg - Stabilizers Spread">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 5</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 5: Stabilizer Stance (2.2m)</h4>
+        <div class="labeled-image-label-tag"><span>●</span> Outrigger Width: 2,200 mm Stance</div>
+      </div>
+    </div>
+
+    <!-- Model 6 -->
+    <div class="labeled-image-card" onclick="selectCADModel(5, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL6.jpeg" alt="MODEL6.jpeg - Isometric Assembly">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 6</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 6: Isometric 3D Assembly</h4>
+        <div class="labeled-image-label-tag"><span>●</span> Complete Mechanical Weldment</div>
+      </div>
+    </div>
+
+    <!-- Model 7 -->
+    <div class="labeled-image-card" onclick="selectCADModel(6, 'main'); document.getElementById('cad-dimensions-section').scrollIntoView({behavior:'smooth'});">
+      <div class="labeled-image-thumb">
+        <img src="MODEL7.jpeg" alt="MODEL7.jpeg - Slew Hub">
+        <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MODEL 7</span>
+      </div>
+      <div class="labeled-image-info">
+        <h4 class="labeled-image-name">Model 7: Slew Hub & Pivot</h4>
+        <div class="labeled-image-label-tag"><span>●</span> 180° Dual-Cylinder Rotation</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="tested-in-field" class="blueprint-grid-light" aria-label="Field Testing & Media">
+      <div class="section-header-wrap">
+        <span class="section-eyebrow">FIELD VALIDATION &amp; LIVE DEMONSTRATION</span>
+        <h2 class="section-heading-dark">TESTED IN THE <span>FIELD</span></h2>
+        <p class="section-desc-dark">
+          Watch the Agrosteed Variant : Stredo heavy tractor backhoe performing continuous canal excavation, trenching, and high-pressure hydraulic tests in real field soil.
+        </p>
+      </div>
+
+      <!-- FEATURED EMBEDDED VIDEO SHOWCASE -->
+      <div class="featured-video-container">
+        <div class="featured-video-card">
+          <div class="video-player-box">
+            <video id="stredo-field-video" controls playsinline preload="metadata" poster="product.jpeg">
+              <source src="field-trial-video.mp4" type="video/mp4">
+              <source src="video.mp4" type="video/mp4">
+              <source src="WhatsApp Video 2026-10-24 at 2.22.59 PM.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <div class="video-info-box">
+            <div class="video-tag-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Live Field Demonstration Video
+            </div>
+            <h3 class="video-title">Agrosteed Stredo HS-2T Field Digging Operation</h3>
+            <p class="video-desc">
+              Watch the heavy-duty Stredo backhoe attachment mounted onto a tractor, performing deep trench excavation with rapid cycle times, smooth hydraulic valve response, and rigid outrigger anchoring.
+            </p>
+            <div class="video-specs-inline">
+              <div class="vspec-item">
+                <span class="vspec-val">2.85 M</span>
+                <span class="vspec-lbl">Max Dig Depth</span>
+              </div>
+              <div class="vspec-item">
+                <span class="vspec-val">210 BAR</span>
+                <span class="vspec-lbl">Working Pressure</span>
+              </div>
+              <div class="vspec-item">
+                <span class="vspec-val">180°</span>
+                <span class="vspec-lbl">Dual Slew Range</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+  <!-- FLOATING MEDIA STREAM (FLOWING CONTINUOUSLY FROM LEFT TO RIGHT) -->
+  <div class="floating-stream-section-header">
+    <span class="stream-eyebrow">CONTINUOUS FIELD &amp; BLUEPRINT STREAM</span>
+    <h3 class="stream-title">FLOATING DEMONSTRATION STREAM</h3>
+    <p class="stream-subtitle">
+      Hover any card to pause and zoom. Live attachments operating across Indian agricultural soil and factory CAD drawings.
+    </p>
+  </div>
+
+  <div class="media-marquee-container" aria-label="Auto-running media stream floating from left to right">
+    <div class="media-marquee-track">
+      <!-- SET A -->
+
+        <!-- Item 1: Real Field Video -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('video', 'field-trial-video.mp4', 'Agrosteed Stredo HS-2T Field Trenching Demonstration', 'Watch the heavy-duty backhoe attachment in deep trenching action on farmland.')">
+          <div class="zoom-media-frame">
+            <img src="product.jpeg" alt="Field Video Thumbnail" loading="lazy">
+            <div class="zoom-media-badge">Video • Field Trial</div>
+            <div class="zoom-click-hint">▶ Click to Play Video</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Stredo Field Trenching Video</h4>
+              <p class="zoom-card-desc">Live footage of high-torque canal and plantation excavation.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Field Trial MP4</span>
+              <span>2.85M Depth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Real Farm Rear Hitch -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg', 'Agrosteed Stredo Tractor Rear Hitch Mount', 'Heavy-duty 3-point tractor connection subframe with ergonomic hydraulic control levers.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg" alt="Rear Hitch Mount" loading="lazy">
+            <div class="zoom-media-badge">Field Photo • Subframe</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Rear Mount & Valve Bank</h4>
+              <p class="zoom-card-desc">Ergonomic joystick control console and high-pressure hydraulic block.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 3-Point Hitch</span>
+              <span>210 BAR</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Canal Digging -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.00 PM.jpeg', 'Plantation Canal Excavation', 'Agrosteed Stredo clearing wide irrigation canals through heavy clay soil.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.00 PM.jpeg" alt="Canal Trench Excavation" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Farmland</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Canal Irrigation Digging</h4>
+              <p class="zoom-card-desc">Deep soil penetration in wet agricultural conditions.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Irrigation Trench</span>
+              <span>450mm Cut</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Boom Articulation Arc -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.01 PM.jpeg', 'High Boom Elevation Clearance', 'Curved boom profile lifting spoil well above high canal embankments.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.01 PM.jpeg" alt="Boom Elevation Arc" loading="lazy">
+            <div class="zoom-media-badge">Hydraulics • Articulation</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Arched Boom Lift Height</h4>
+              <p class="zoom-card-desc">Superior 3.42m operating elevation clearance over trench rims.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 155° Boom Arc</span>
+              <span>3.42M Height</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5: Model 4 CAD Side Elevation Blueprint -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL4.jpeg', 'Model 4: Side Elevation CAD Blueprint', 'Exact dimensions: 2.85m depth, 3.85m reach radius from slew pivot.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL4.jpeg" alt="Model 4 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 4</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 4: Side Elevation Reach</h4>
+              <p class="zoom-card-desc">Factory CAD drawing detailing 2.85m digging depth and 3.85m horizontal reach.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>3.85M Reach</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6: Plantation Full Reach -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg', 'Full Reach Plantation Trenching', 'Operating between coconut tree trunks with high precision.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg" alt="Plantation Trenching" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Orchard</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Orchard Trench Excavation</h4>
+              <p class="zoom-card-desc">Demonstrating compact radius between plantation tree lines.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Compact Slew</span>
+              <span>Zero Roll</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 7: Dual Outrigger Anchor -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'product2.jpeg', 'Dual Hydraulic Stabilizers Deployed', 'Heavy outriggers deployed on soft farm soil providing solid anchor stability.')">
+          <div class="zoom-media-frame">
+            <img src="product2.jpeg" alt="Stabilizers Deployed" loading="lazy">
+            <div class="zoom-media-badge">Field Photo • Stance</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Dual Outrigger Stance</h4>
+              <p class="zoom-card-desc">2.2m wide-stance pads locking the tractor firmly to the terrain.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 2.2M Stance</span>
+              <span>Lock Valves</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 8: Model 5 CAD Stabilizer Blueprint -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL5.jpeg', 'Model 5: Stabilizer Stance Blueprint', 'Plan view detailing 2.2m outrigger spread and independent hydraulic leveling.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL5.jpeg" alt="Model 5 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 5</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 5: Outrigger Stance (2.2m)</h4>
+              <p class="zoom-card-desc">Engineering plan view showing full stabilizer deployment geometry.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>2,200mm Span</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 9: Heavy Soil Extraction Crowd -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.03 PM.jpeg', 'High Breakout Soil Extraction', 'Induction-hardened hydraulic cylinders powering heavy bucket breakout in rocky trenches.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.03 PM.jpeg" alt="Breakout Soil Extraction" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Hard Dig</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Rocky Soil Breakout</h4>
+              <p class="zoom-card-desc">2,150 kgf crowd force breaking through dense, compact earth.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Breakout Force</span>
+              <span>2,150 kgf</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 10: Model 6 Isometric CAD Assembly -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL6.jpeg', 'Model 6: Isometric Mechanical Assembly', 'Complete axonometric mechanical weldment drawing.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL6.jpeg" alt="Model 6 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 6</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 6: Isometric Assembly</h4>
+              <p class="zoom-card-desc">Complete 3D axonometric technical drawing illustrating structural weldments.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>Hardox 450</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- SET B (DUPLICATE FOR SEAMLESS 100% INFINITE LOOP) -->
+
+        <!-- Item 1: Real Field Video -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('video', 'field-trial-video.mp4', 'Agrosteed Stredo HS-2T Field Trenching Demonstration', 'Watch the heavy-duty backhoe attachment in deep trenching action on farmland.')">
+          <div class="zoom-media-frame">
+            <img src="product.jpeg" alt="Field Video Thumbnail" loading="lazy">
+            <div class="zoom-media-badge">Video • Field Trial</div>
+            <div class="zoom-click-hint">▶ Click to Play Video</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Stredo Field Trenching Video</h4>
+              <p class="zoom-card-desc">Live footage of high-torque canal and plantation excavation.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Field Trial MP4</span>
+              <span>2.85M Depth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Real Farm Rear Hitch -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg', 'Agrosteed Stredo Tractor Rear Hitch Mount', 'Heavy-duty 3-point tractor connection subframe with ergonomic hydraulic control levers.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg" alt="Rear Hitch Mount" loading="lazy">
+            <div class="zoom-media-badge">Field Photo • Subframe</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Rear Mount & Valve Bank</h4>
+              <p class="zoom-card-desc">Ergonomic joystick control console and high-pressure hydraulic block.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 3-Point Hitch</span>
+              <span>210 BAR</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Canal Digging -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.00 PM.jpeg', 'Plantation Canal Excavation', 'Agrosteed Stredo clearing wide irrigation canals through heavy clay soil.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.00 PM.jpeg" alt="Canal Trench Excavation" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Farmland</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Canal Irrigation Digging</h4>
+              <p class="zoom-card-desc">Deep soil penetration in wet agricultural conditions.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Irrigation Trench</span>
+              <span>450mm Cut</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Boom Articulation Arc -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.01 PM.jpeg', 'High Boom Elevation Clearance', 'Curved boom profile lifting spoil well above high canal embankments.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.01 PM.jpeg" alt="Boom Elevation Arc" loading="lazy">
+            <div class="zoom-media-badge">Hydraulics • Articulation</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Arched Boom Lift Height</h4>
+              <p class="zoom-card-desc">Superior 3.42m operating elevation clearance over trench rims.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 155° Boom Arc</span>
+              <span>3.42M Height</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5: Model 4 CAD Side Elevation Blueprint -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL4.jpeg', 'Model 4: Side Elevation CAD Blueprint', 'Exact dimensions: 2.85m depth, 3.85m reach radius from slew pivot.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL4.jpeg" alt="Model 4 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 4</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 4: Side Elevation Reach</h4>
+              <p class="zoom-card-desc">Factory CAD drawing detailing 2.85m digging depth and 3.85m horizontal reach.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>3.85M Reach</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6: Plantation Full Reach -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg', 'Full Reach Plantation Trenching', 'Operating between coconut tree trunks with high precision.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg" alt="Plantation Trenching" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Orchard</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Orchard Trench Excavation</h4>
+              <p class="zoom-card-desc">Demonstrating compact radius between plantation tree lines.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Compact Slew</span>
+              <span>Zero Roll</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 7: Dual Outrigger Anchor -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'product2.jpeg', 'Dual Hydraulic Stabilizers Deployed', 'Heavy outriggers deployed on soft farm soil providing solid anchor stability.')">
+          <div class="zoom-media-frame">
+            <img src="product2.jpeg" alt="Stabilizers Deployed" loading="lazy">
+            <div class="zoom-media-badge">Field Photo • Stance</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Dual Outrigger Stance</h4>
+              <p class="zoom-card-desc">2.2m wide-stance pads locking the tractor firmly to the terrain.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● 2.2M Stance</span>
+              <span>Lock Valves</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 8: Model 5 CAD Stabilizer Blueprint -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL5.jpeg', 'Model 5: Stabilizer Stance Blueprint', 'Plan view detailing 2.2m outrigger spread and independent hydraulic leveling.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL5.jpeg" alt="Model 5 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 5</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 5: Outrigger Stance (2.2m)</h4>
+              <p class="zoom-card-desc">Engineering plan view showing full stabilizer deployment geometry.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>2,200mm Span</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 9: Heavy Soil Extraction Crowd -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.03 PM.jpeg', 'High Breakout Soil Extraction', 'Induction-hardened hydraulic cylinders powering heavy bucket breakout in rocky trenches.')">
+          <div class="zoom-media-frame">
+            <img src="WhatsApp Image 2026-10-24 at 2.23.03 PM.jpeg" alt="Breakout Soil Extraction" loading="lazy">
+            <div class="zoom-media-badge">Field Trial • Hard Dig</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Rocky Soil Breakout</h4>
+              <p class="zoom-card-desc">2,150 kgf crowd force breaking through dense, compact earth.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● Breakout Force</span>
+              <span>2,150 kgf</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 10: Model 6 Isometric CAD Assembly -->
+        <div class="zoom-media-card" onclick="openMediaLightbox('image', 'MODEL6.jpeg', 'Model 6: Isometric Mechanical Assembly', 'Complete axonometric mechanical weldment drawing.')">
+          <div class="zoom-media-frame">
+            <img src="MODEL6.jpeg" alt="Model 6 CAD Blueprint" loading="lazy">
+            <div class="zoom-media-badge">CAD Blueprint • Model 6</div>
+            <div class="zoom-click-hint">🔍 Click to Zoom</div>
+          </div>
+          <div class="zoom-card-body">
+            <div>
+              <h4 class="zoom-card-title">Model 6: Isometric Assembly</h4>
+              <p class="zoom-card-desc">Complete 3D axonometric technical drawing illustrating structural weldments.</p>
+            </div>
+            <div class="zoom-card-footer">
+              <span>● CAD Blueprint</span>
+              <span>Hardox 450</span>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+<!-- ALL LABELED ASSETS SHOWCASE -->
+      <div class="labeled-gallery-section">
+        <h3 class="gallery-grid-title">All Project Media &amp; Factory Assets (Click Any Item to Inspect)</h3>
+        <div class="all-images-grid">
+          <!-- Item 1: Real Video -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('video', 'field-trial-video.mp4', 'Field Trial Video — Stredo Tractor Backhoe In Action', 'Operational footage demonstrating canal excavation, dipper arm crowd force, and hydraulic response.')">
+            <div class="labeled-image-thumb">
+              <img src="product.jpeg" alt="Field Trial Video">
+              <span class="labeled-image-badge" style="background:var(--orange);color:var(--charcoal);font-weight:700;">MP4 VIDEO</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Field Trial Video (9.5MB)</h4>
+              <div class="labeled-image-label-tag"><span>▶</span> Click to Play Full Video</div>
+            </div>
+          </div>
+
+          <!-- Item 2: product.jpeg -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'product.jpeg', 'Stredo Backhoe Deep Trenching in Farmland', 'High-tensile excavator boom and bucket digging irrigation trenches in plantation soil.')">
+            <div class="labeled-image-thumb">
+              <img src="product.jpeg" alt="product.jpeg">
+              <span class="labeled-image-badge">product.jpeg</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">In-Field Deep Trenching</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Name: product.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 3: product2.jpeg -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'product2.jpeg', 'Dual Outriggers & Articulation Test', 'Wide hydraulic stabilizer stance locking the tractor onto rough field ground.')">
+            <div class="labeled-image-thumb">
+              <img src="product2.jpeg" alt="product2.jpeg">
+              <span class="labeled-image-badge">product2.jpeg</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Hydraulic Outriggers Test</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Name: product2.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 4: Real Farm Photo 2.22.52 -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg', 'Rear 3-Point Hitch & Valve Block in Farmland', 'Rear perspective showing valve levers, kingpost swivel, and outrigger stabilizer arms resting on coconut farm ground.')">
+            <div class="labeled-image-thumb">
+              <img src="WhatsApp Image 2026-10-24 at 2.22.52 PM.jpeg" alt="Rear Mount Farm Photo">
+              <span class="labeled-image-badge">Farm Deployment</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Rear Subframe &amp; Outriggers</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Asset: 2.22.52 PM.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 5: Real Farm Photo 2.23.05 -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg', 'Plantation Trench Excavation Reach', 'Live view of the arched boom and dipper digging tree basins in a high-density coconut orchard.')">
+            <div class="labeled-image-thumb">
+              <img src="WhatsApp Image 2026-10-24 at 2.23.05 PM.jpeg" alt="Plantation Trench Excavation">
+              <span class="labeled-image-badge">Plantation Digging</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Orchard Trench Digging</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Asset: 2.23.05 PM.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 6: MODEL4.jpeg -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'MODEL4.jpeg', 'Model 4: True Side Elevation & Reach CAD Blueprint', 'Side elevation CAD projection detailing 2,850 mm digging depth and 3,850 mm reach.')">
+            <div class="labeled-image-thumb">
+              <img src="MODEL4.jpeg" alt="MODEL4.jpeg">
+              <span class="labeled-image-badge">MODEL4.jpeg</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Model 4: Side Elevation CAD</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Name: MODEL4.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 7: MODEL5.jpeg -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'MODEL5.jpeg', 'Model 5: Stabilizer Stance Plan CAD Blueprint', 'Top plan view showing 2,200 mm stabilizer spread footprint.')">
+            <div class="labeled-image-thumb">
+              <img src="MODEL5.jpeg" alt="MODEL5.jpeg">
+              <span class="labeled-image-badge">MODEL5.jpeg</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Model 5: Outrigger Stance CAD</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Name: MODEL5.jpeg</div>
+            </div>
+          </div>
+
+          <!-- Item 8: MODEL6.jpeg -->
+          <div class="labeled-image-card" onclick="openMediaLightbox('image', 'MODEL6.jpeg', 'Model 6: Isometric 3D Mechanical Assembly', 'Isometric 3D perspective detailing all joints, cylinders, and linkages.')">
+            <div class="labeled-image-thumb">
+              <img src="MODEL6.jpeg" alt="MODEL6.jpeg">
+              <span class="labeled-image-badge">MODEL6.jpeg</span>
+            </div>
+            <div class="labeled-image-info">
+              <h4 class="labeled-image-name">Model 6: Isometric Assembly</h4>
+              <div class="labeled-image-label-tag"><span>🏷</span> Name: MODEL6.jpeg</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Testimonials -->
+      <div class="feedback-outer-wrap">
+        <div class="feedback-grid">
+          <div class="feedback-card">
+            <div>
+              <div class="feedback-stars">★★★★★</div>
+              <p class="feedback-quote">
+                "We attached the Agrosteed Stredo backhoe to our 55HP Mahindra tractor. In 3 weeks, we excavated over 14 kilometers of irrigation channels. The hydraulic levers respond with incredible precision and the subframe protects the tractor perfectly."
+              </p>
+            </div>
+            <div class="feedback-author-row">
+              <div class="author-avatar">RM</div>
+              <div class="author-info">
+                <h4>R. Murugesan</h4>
+                <p>Murugan Agro Farms • Thanjavur, TN</p>
+              </div>
+              <span class="author-badge">Variant : Stredo</span>
+            </div>
+          </div>
+
+          <div class="feedback-card">
+            <div>
+              <div class="feedback-stars">★★★★★</div>
+              <p class="feedback-quote">
+                "Agrosteed Industries Pvt. Ltd delivered on time and provided comprehensive tractor hitch alignment on our farm. The Stredo variant’s outriggers keep our tractor steady even in wet clay."
+              </p>
+            </div>
+            <div class="feedback-author-row">
+              <div class="author-avatar">SP</div>
+              <div class="author-info">
+                <h4>Suresh Patil</h4>
+                <p>Patil Earthworks &amp; Contracting • Kolhapur, MH</p>
+              </div>
+              <span class="author-badge">Variant : Stredo</span>
+            </div>
+          </div>
+
+          <div class="feedback-card">
+            <div>
+              <div class="feedback-stars">★★★★★</div>
+              <p class="feedback-quote">
+                "The build quality of the Hardox bucket and hydraulic cylinders is unmatched. Excellent service and prompt telephone assistance directly from the factory engineers."
+              </p>
+            </div>
+            <div class="feedback-author-row">
+              <div class="author-avatar">GK</div>
+              <div class="author-info">
+                <h4>G. Krishnakumar</h4>
+                <p>Kaveri Delta FPO • Erode, TN</p>
+              </div>
+              <span class="author-badge">Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: REQUIREMENTS FORM
+         ====================================================================== -->
+    <section id="requirements-section" class="blueprint-grid-dark" aria-label="Tell Us Your Requirement">
+      <div class="req-container">
+        <div class="form-wrapper-card">
+          <span class="section-eyebrow">DIRECT FACTORY QUOTATION</span>
+          <h2 style="font-family:var(--font-display);font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:0.8rem;">
+            TELL US YOUR <span style="color:var(--orange)">REQUIREMENT</span>
+          </h2>
+          <p style="color:var(--txt-secondary);font-size:1rem;max-width:700px;">
+            Enquire directly with Agrosteed Industries Pvt. Ltd for Variant : Stredo attachments, custom fabrication, and agricultural machinery.
+          </p>
+
+          <form id="requirement-form" onsubmit="handleFormSubmit(event)" novalidate>
+            <div class="req-form-grid">
+              <div class="form-group" id="grp-name">
+                <label class="form-label" for="req-name">Your Full Name <span class="req-star">*</span></label>
+                <input type="text" id="req-name" name="name" class="form-control" placeholder="e.g. Anand Kumar" required>
+                <span class="form-error-msg">Please enter your full name.</span>
+              </div>
+
+              <div class="form-group" id="grp-company">
+                <label class="form-label" for="req-company">Company / Farm / Contracting Firm</label>
+                <input type="text" id="req-company" name="company" class="form-control" placeholder="e.g. Kumar Earthmovers">
+              </div>
+
+              <div class="form-group" id="grp-phone">
+                <label class="form-label" for="req-phone">Phone / WhatsApp Number <span class="req-star">*</span></label>
+                <input type="tel" id="req-phone" name="phone" class="form-control" placeholder="e.g. +91 9876543210" required>
+                <span class="form-error-msg">Please enter a valid 10-digit mobile number.</span>
+              </div>
+
+              <div class="form-group" id="grp-email">
+                <label class="form-label" for="req-email">Email Address <span class="req-star">*</span></label>
+                <input type="email" id="req-email" name="email" class="form-control" placeholder="e.g. anand@kumaragri.com" required>
+                <span class="form-error-msg">Please enter a valid email address.</span>
+              </div>
+
+              <div class="form-group" id="grp-location">
+                <label class="form-label" for="req-location">Delivery Location (State / District) <span class="req-star">*</span></label>
+                <input type="text" id="req-location" name="location" class="form-control" placeholder="e.g. Coimbatore, Tamil Nadu" required>
+                <span class="form-error-msg">Please enter your destination district and state.</span>
+              </div>
+
+              <div class="form-group" id="grp-model">
+                <label class="form-label" for="req-model">Machine Model Interested In <span class="req-star">*</span></label>
+                <select id="req-model" name="model" class="form-control" required>
+                  <option value="Agrosteed Stredo HS-2T Backhoe" selected>Agrosteed Stredo HS-2T (Tractor Backhoe Attachment)</option>
+                  <option value="Agrosteed Stredo X-30 Excavator">Agrosteed Stredo X-30 (Compact Hydraulic Excavator)</option>
+                  <option value="Agrosteed Stredo Pro-500 Loader">Agrosteed Stredo Pro-500 (Heavy Front Loader)</option>
+                  <option value="Custom Stredo Agri Fabrication">Custom Agri-Equipment / Hydraulic Arm Fabrication</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="grp-work">
+                <label class="form-label" for="req-work">Type of Work</label>
+                <select id="req-work" name="work_type" class="form-control">
+                  <option value="Earthmoving & Trenching">Earthmoving & Trenching</option>
+                  <option value="Farming & Irrigation Channels">Farming & Irrigation Channels</option>
+                  <option value="Quarry & Hard Soil Works">Quarry & Hard Soil Works</option>
+                  <option value="Road & Drainage Work">Road & Drainage Work</option>
+                  <option value="Plantation & Tree Basin Digging">Plantation & Tree Basin Digging</option>
+                  <option value="Other Commercial Project">Other Commercial Work</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="grp-qty">
+                <label class="form-label" for="req-quantity">Quantity Required</label>
+                <select id="req-quantity" name="quantity" class="form-control">
+                  <option value="1 Unit">1 Unit</option>
+                  <option value="2 - 5 Units">2 - 5 Units</option>
+                  <option value="6 - 10 Units">6 - 10 Units</option>
+                  <option value="10+ Fleet Units">10+ Fleet Order</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="grp-timeline">
+                <label class="form-label" for="req-timeline">Expected Purchase Timeline</label>
+                <select id="req-timeline" name="timeline" class="form-control">
+                  <option value="Immediate (< 15 days)">Immediate (&lt; 15 days)</option>
+                  <option value="Within 1 Month">Within 1 Month</option>
+                  <option value="1 to 3 Months">1 to 3 Months</option>
+                  <option value="Planning / Annual Budget">Planning &amp; Research</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="grp-intent">
+                <label class="form-label" for="req-intent">Requirement Type</label>
+                <select id="req-intent" name="intent" class="form-control">
+                  <option value="Outright Purchase (Direct Buy)">Outright Purchase (Direct Buy)</option>
+                  <option value="Equipment Rental / Hire Enquiry">Equipment Rental / Hire Enquiry</option>
+                  <option value="Dealership / Distribution Request">Dealership / Agency Request</option>
+                  <option value="Government / Tender Procurement">Tender / Bulk Commercial</option>
+                </select>
+              </div>
+
+              <div class="form-group full-width" id="grp-message">
+                <label class="form-label" for="req-message">Tractor Model, Horsepower &amp; Special Requirements</label>
+                <textarea id="req-message" name="message" class="form-control" placeholder="Specify your tractor brand/model (e.g. Mahindra 575, John Deere 5310, Swaraj 855), required bucket width, or soil conditions..."></textarea>
+              </div>
+            </div>
+
+            <div class="form-submit-row">
+              <button type="submit" class="btn-submit-main">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Submit Quotation Request
+              </button>
+
+              <button type="button" class="btn-whatsapp-direct" onclick="sendOnWhatsApp()">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.115-.516-1.815-.752-2.986-2.59-3.076-2.71-.09-.12-1.071-1.424-1.071-2.716s.672-1.929.912-2.189c.24-.26.528-.324.704-.324.177 0 .354.002.508.01.163.008.38-.062.595.452.221.529.756 1.84.822 1.974.066.134.11.29.022.464-.088.174-.132.283-.264.437-.132.155-.278.345-.397.464-.133.132-.271.275-.117.54.154.264.685 1.13 1.472 1.831 1.012.902 1.865 1.182 2.13 1.314.264.132.418.11.572-.066.155-.176.662-.771.838-1.036.176-.264.352-.22.594-.132.242.088 1.542.727 1.806.859.264.132.44.198.506.308.066.11.066.638-.078 1.043z"/></svg>
+                Send on WhatsApp
+              </button>
+            </div>
+
+            <div id="form-success-banner" class="form-success-banner" role="status" aria-live="polite">
+              <h3>Requirement Successfully Received!</h3>
+              <p>Reference Ticket ID: <strong id="receipt-id" style="color:var(--orange)">ASI-REQ-2026-8941</strong></p>
+              <p style="margin-top:6px;">Our factory engineer from Agrosteed Industries Pvt. Ltd will contact you shortly with CAD specifications and pricing.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: CONTACT & FOOTER
+         ====================================================================== -->
+    <section id="contact-section" class="blueprint-grid-dark" aria-label="Contact Details">
+      <div class="contact-layout-grid">
+        <div class="contact-info-col">
+          <span class="section-eyebrow">HEADQUARTERS &amp; WORKS</span>
+          <h2>AGROSTEED <span>INDUSTRIES</span></h2>
+          <p class="contact-info-desc">
+            Agrosteed Industries Pvt. Ltd • Makers of Variant : Stredo heavy tractor backhoe attachments and earthmoving equipment.
+          </p>
+
+          <div class="contact-details-list">
+            <div class="contact-item-row">
+              <div class="contact-icon-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="contact-item-text">
+                <h4>Manufacturing Works &amp; Office</h4>
+                <p>Agrosteed Industries Pvt. Ltd (Terra Movers Industries)<br>
+                Industrial Fabrication Estate, Coimbatore Road, Tamil Nadu — 641001, India</p>
+              </div>
+            </div>
+
+            <div class="contact-item-row">
+              <div class="contact-icon-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="contact-item-text">
+                <h4>Direct Engineering Helpline</h4>
+                <p>
+                  <a href="tel:+918608962057">+91 8608962057</a> &nbsp;|&nbsp; 
+                  <a href="tel:+919786361835">+91 9786361835</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-item-row">
+              <div class="contact-icon-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="contact-item-text">
+                <h4>Official Inquiries</h4>
+                <p><a href="mailto:terramoversindustries@gmail.com">terramoversindustries@gmail.com</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-embed-wrapper" role="region" aria-label="Interactive Factory Location Map">
+          <div class="map-bg-blueprint"></div>
+          <div class="radar-ping" title="Agrosteed Industries Plant"></div>
+
+          <div class="map-info-badge">
+            <h5>AGROSTEED INDUSTRIES WORKS</h5>
+            <p>GPS: 11.0168° N, 76.9558° E • Central Industrial Hub</p>
+            <p style="color:var(--orange);font-weight:600;margin-top:4px;">Factory Open for Live Customer Demonstrations</p>
+          </div>
+
+          <a href="https://maps.google.com/?q=Coimbatore+Industrial+Estate" target="_blank" rel="noopener noreferrer" class="btn-directions">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            Get GPS Directions &rarr;
+          </a>
+        </div>
+      </div>
+
+      <footer class="site-footer-bottom">
+        <div class="footer-brand">
+          <img src="logo-dark-bg.png" alt="Agrosteed Industries Pvt. Ltd" onerror="this.src='favicon.png'">
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--white);">AGROSTEED INDUSTRIES PVT. LTD</div>
+            <div class="footer-copy">&copy; 2026 Agrosteed Industries Pvt. Ltd • Variant : Stredo. All Rights Reserved.</div>
+          </div>
+        </div>
+
+        <div class="footer-links-row">
+          <a href="#hero">Overview</a>
+          <a href="#models-3d-stage">Variant : Stredo 3D</a>
+          <a href="#cad-dimensions-section">CAD Dimensions (M1-7)</a>
+          <a href="#tested-in-field">Field Trials</a>
+          <a href="#requirements-section">Submit Requirement</a>
+          <a href="https://wa.me/918608962057" target="_blank" rel="noopener">WhatsApp Support</a>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       MODAL: LIGHTBOX WITH PROMINENT CLICK-NAME LABELS
+       ======================================================================== -->
+  <div id="lightbox-modal" onclick="closeMediaLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <span class="lightbox-close" onclick="closeMediaLightbox()">&times;</span>
+      <div id="lightbox-label-tag" class="lightbox-header-label">FILE ASSET: MODEL4.JPEG</div>
+      <h3 id="lightbox-title" class="lightbox-title-name">ITEM TITLE NAME</h3>
+      
+      <div class="lightbox-media-wrapper" id="lightbox-media-box"></div>
+      
+      <p id="lightbox-desc" class="lightbox-caption-text">Description and technical details of the selected media.</p>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: HIGH-CLARITY THREE.JS 3D ENGINE, DIMENSIONS & UX -->
+  <script>
+    const MACHINE_MODELS = [
+      {
+        id: "model-1",
+        name: "STREDO HS-2T BACKHOE",
+        tag: "AGROSTEED PVT. LTD — VARIANT : STREDO",
+        tagline: "Heavy-duty tractor backhoe attachment (Variant : Stredo) designed for 45HP - 90HP tractors with dual stabilizing outriggers and 180° swing rotation.",
+        specs: { power: 55, weight: 1850, bucket: 0.28, depth: 2.85 }
+      },
+      {
+        id: "model-2",
+        name: "STREDO X-30 EXCAVATOR",
+        tag: "AGROSTEED PVT. LTD — VARIANT : STREDO",
+        tagline: "Compact hydraulic excavator (Variant : Stredo) featuring zero-tail swing and high breakout force for plantations and irrigation trenches.",
+        specs: { power: 32, weight: 3100, bucket: 0.18, depth: 2.45 }
+      },
+      {
+        id: "model-3",
+        name: "STREDO PRO-500 LOADER",
+        tag: "AGROSTEED PVT. LTD — VARIANT : STREDO",
+        tagline: "Agricultural front-end loader system (Variant : Stredo) with heavy-duty twin lift arms and 1.2-tonne payload rating.",
+        specs: { power: 65, weight: 1420, bucket: 0.55, depth: 3.40 }
+      }
+    ];
+
+    const PART_SPECS_DATA = {
+      bucket: {
+        code: "PART-01 // FRONT EXCAVATION",
+        title: "Reinforced Excavation Bucket",
+        desc: "Heavy-duty fabricated curved bucket made from abrasion-resistant Hardox manganese alloy with replaceable heat-treated rock-penetration teeth.",
+        specs: [
+          { lbl: "Cutting Width", val: "450 mm / 18 inches" },
+          { lbl: "Bucket Capacity (SAE)", val: "0.28 cu. meters" },
+          { lbl: "Teeth Material", val: "Forged Manganese Alloy Steel" },
+          { lbl: "Breakout Force", val: "22.5 kN at tooth edge" }
+        ]
+      },
+      arm: {
+        code: "PART-02 // REACH ARCHITECTURE",
+        title: "Box-Section Dipper Arm",
+        desc: "Precision welded high-tensile hollow rectangular box section containing internal stiffener gussets to resist twisting under maximum crowd torque.",
+        specs: [
+          { lbl: "Reach from Slew Pivot", val: "3,850 mm" },
+          { lbl: "Max Digging Depth", val: "2,850 mm" },
+          { lbl: "Pin Bushings", val: "Heat-treated hardened steel, greaseable" },
+          { lbl: "Crowd Force", val: "17.8 kN" }
+        ]
+      },
+      boom: {
+        code: "PART-03 // ARMORED ELEVATION",
+        title: "Curved Main Boom",
+        desc: "Ergonomically arched boom structure providing superior clearance over trench borders, roadside barriers, and truck sideboard loading heights.",
+        specs: [
+          { lbl: "Boom Profile", val: "Curved Arched Box Beam" },
+          { lbl: "Lift Capacity at Full Reach", val: "680 kg" },
+          { lbl: "Hydraulic Cylinder", val: "Single 85mm bore heavy duty" },
+          { lbl: "Swing Range", val: "180° dual cylinder slew" }
+        ]
+      },
+      cylinders: {
+        code: "PART-04 // HYDRAULIC ACTUATION",
+        title: "High-Pressure Hydraulic Cylinders",
+        desc: "Double-acting hydraulic cylinders equipped with induction-hardened hard-chrome plated rods, polyurethane wiper seals, and anti-cavitation check valves.",
+        specs: [
+          { lbl: "Operating Pressure", val: "210 Bar / 3,045 PSI" },
+          { lbl: "Piston Rod Finish", val: "Micro-crack hard chrome 25 microns" },
+          { lbl: "Hose Rating", val: "DIN EN 853 2SN high-tensile wire braid" },
+          { lbl: "Cushioning", val: "End-of-stroke hydraulic damping" }
+        ]
+      },
+      stabilizers: {
+        code: "PART-05 // STABILIZATION",
+        title: "Hydraulic Outrigger Legs",
+        desc: "Independently controlled vertical/slant hydraulic stabilizer legs with self-aligning wide steel foot pads that anchor into muddy or uneven field ground.",
+        specs: [
+          { lbl: "Stance Width (Spread)", val: "2,200 mm" },
+          { lbl: "Locking Valves", val: "Pilot-operated dual check valves" },
+          { lbl: "Foot Pads", val: "Pivot swivel serrated steel" },
+          { lbl: "Levelling Range", val: "+/- 15 degrees ground slope" }
+        ]
+      },
+      mount: {
+        code: "PART-06 // TRACTOR CHASSIS HITCH",
+        title: "Subframe 3-Point Chassis Mount",
+        desc: "Heavy fabricated structural steel cradle that bridges between the tractor’s 3-point linkage and rear axle casing to transfer dynamic digging thrust safely.",
+        specs: [
+          { lbl: "Hitch Compatibility", val: "CAT-II / CAT-III Standard" },
+          { lbl: "Hitch Time", val: "Under 15 minutes quick-lock" },
+          { lbl: "PTO Pump Drive", val: "540 RPM direct spline mount" },
+          { lbl: "Hydraulic Oil Reservoir", val: "35 Litre integrated tank" }
+        ]
+      }
+    };
+
+    // Smooth scroll
+    let lenis;
+    try {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: false
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    } catch(e) {}
+
+    function skipOpeningCurtain() {
+      const curtain = document.getElementById("opening-curtain");
+      const header = document.getElementById("site-header");
+      if (curtain) curtain.classList.add("revealed");
+      if (header) header.classList.add("visible");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => { skipOpeningCurtain(); }, 2400);
+    });
+
+    function toggleMobileMenu() {
+      const drawer = document.getElementById("mobile-drawer");
+      if (drawer) drawer.classList.toggle("open");
+    }
+
+    function scrollTo3DStage() {
+      const target = document.getElementById("models-3d-stage");
+      if (target) {
+        if (lenis) lenis.scrollTo(target);
+        else target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    /* ==========================================================================
+       THREE.JS HIGH-CLARITY 3D ENGINE (NO INTRUSION - POSITIONED CLEANLY)
+       ========================================================================== */
+    let scene, camera, renderer, controls;
+    let machineRootGroup = new THREE.Group();
+    let namedParts = {};
+    let explosionProgress = 0;
+    let currentModelIndex = 0;
+    let selectedPartKey = null;
+
+    const EXPLODE_VECTORS = {
+      bucket:      new THREE.Vector3(2.8, -1.3, 0),
+      arm:         new THREE.Vector3(1.9, 1.0, 0),
+      boom:        new THREE.Vector3(0.6, 2.3, 0),
+      cylinders:   new THREE.Vector3(0.0, 1.8, 1.5),
+      stabilizers: new THREE.Vector3(-0.4, -1.8, 2.5),
+      mount:       new THREE.Vector3(-2.4, -0.6, 0)
+    };
+
+    function initThreeEngine() {
+      const canvas = document.getElementById("three-canvas");
+      if (!canvas) return;
+
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance"
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.35;
+      } catch (err) {
+        console.error("WebGL failed:", err);
+        return;
+      }
+
+      scene = new THREE.Scene();
+
+      // OPTIMIZED CAMERA & TARGET: Placed cleanly in the open center-right so left HUD never intrudes!
+      camera = new THREE.PerspectiveCamera(36, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.set(6.2, 3.0, 6.8); // OPTIMAL CENTERED PERSPECTIVE
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 + 0.1;
+      controls.minDistance = 3.0;
+      controls.maxDistance = 16;
+      controls.target.set(0, 0.35, 0); // CLEANLY CENTERED WITH ZERO INTRUSION // Centers machine in open viewport area
+
+      setupHighClarityLighting();
+      buildHighClarityProceduralMachine();
+      scene.add(machineRootGroup);
+
+      loadUserGLBModelIfExists();
+      setupRaycasting();
+      animate();
+
+      window.addEventListener("resize", onWindowResize);
+    }
+
+    function setupHighClarityLighting() {
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.6);
+      keyLight.position.set(9, 14, 8);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 2048;
+      keyLight.shadow.mapSize.height = 2048;
+      scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xf1f5f9, 1.1);
+      fillLight.position.set(-8, 8, 7);
+      scene.add(fillLight);
+
+      const rimLight = new THREE.DirectionalLight(0x22c55e, 0.95);
+      rimLight.position.set(-9, 5, -8);
+      scene.add(rimLight);
+
+      const bounceLight = new THREE.DirectionalLight(0xF58A1F, 0.65);
+      bounceLight.position.set(0, -6, 5);
+      scene.add(bounceLight);
+    }
+
+    function buildHighClarityProceduralMachine() {
+      while(machineRootGroup.children.length > 0){ 
+        machineRootGroup.remove(machineRootGroup.children[0]); 
+      }
+      namedParts = {};
+
+      const orangePaint = new THREE.MeshStandardMaterial({
+        color: 0xF58A1F,
+        metalness: 0.15,
+        roughness: 0.3,
+        emissive: 0x3a1900,
+        emissiveIntensity: 0.08
+      });
+
+      const darkSteel = new THREE.MeshStandardMaterial({
+        color: 0x1A1C20,
+        metalness: 0.85,
+        roughness: 0.4
+      });
+
+      const chromePiston = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF,
+        metalness: 0.98,
+        roughness: 0.05
+      });
+
+      const bucketSteel = new THREE.MeshStandardMaterial({
+        color: 0x32353A,
+        metalness: 0.7,
+        roughness: 0.45
+      });
+
+      const blackHoseMat = new THREE.MeshStandardMaterial({
+        color: 0x0A0B0D,
+        roughness: 0.8,
+        metalness: 0.1
+      });
+
+      // 1. MOUNT & 3-POINT HITCH
+      const mountGroup = new THREE.Group();
+      mountGroup.name = "mount";
+
+      const hitchFrame = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.3, 1.9), orangePaint);
+      hitchFrame.position.set(-1.25, 0.25, 0);
+      mountGroup.add(hitchFrame);
+
+      const leftBracket = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.55, 0.28), darkSteel);
+      leftBracket.position.set(-1.65, 0.15, 0.75);
+      const rightBracket = leftBracket.clone();
+      rightBracket.position.set(-1.65, 0.15, -0.75);
+      mountGroup.add(leftBracket, rightBracket);
+
+      const valveBox = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.55, 0.65), darkSteel);
+      valveBox.position.set(-0.95, 1.05, 0);
+      mountGroup.add(valveBox);
+
+      for (let i = 0; i < 5; i++) {
+        const lever = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.38), chromePiston);
+        lever.position.set(-0.95, 1.45, -0.24 + i * 0.12);
+        lever.rotation.z = 0.22;
+        const knob = new THREE.Mesh(new THREE.SphereGeometry(0.038, 12, 12), orangePaint);
+        knob.position.set(0, 0.2, 0);
+        lever.add(knob);
+        mountGroup.add(lever);
+      }
+
+      const kingpost = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.95, 24), darkSteel);
+      kingpost.position.set(-0.5, 0.25, 0);
+      mountGroup.add(kingpost);
+
+      namedParts.mount = mountGroup;
+      machineRootGroup.add(mountGroup);
+
+      // 2. STABILIZERS (OUTRIGGERS)
+      const stabGroup = new THREE.Group();
+      stabGroup.name = "stabilizers";
+
+      const legGeo = new THREE.BoxGeometry(0.2, 1.7, 0.2);
+      const leftLeg = new THREE.Mesh(legGeo, orangePaint);
+      leftLeg.position.set(-0.65, -0.55, 1.15);
+      leftLeg.rotation.x = 0.46;
+      leftLeg.rotation.z = -0.16;
+
+      const footPadGeo = new THREE.BoxGeometry(0.5, 0.09, 0.5);
+      const leftFoot = new THREE.Mesh(footPadGeo, darkSteel);
+      leftFoot.position.set(0, -0.9, 0);
+      leftLeg.add(leftFoot);
+
+      const rightLeg = leftLeg.clone();
+      rightLeg.position.set(-0.65, -0.55, -1.15);
+      rightLeg.rotation.x = -0.46;
+      rightLeg.rotation.z = -0.16;
+
+      stabGroup.add(leftLeg, rightLeg);
+      namedParts.stabilizers = stabGroup;
+      machineRootGroup.add(stabGroup);
+
+      // 3. MAIN BOOM
+      const boomGroup = new THREE.Group();
+      boomGroup.name = "boom";
+
+      const lowerBoom = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.35, 0.35), orangePaint);
+      lowerBoom.position.set(0.42, 0.72, 0);
+      lowerBoom.rotation.z = 0.58;
+
+      const upperBoom = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.3, 0.3), orangePaint);
+      upperBoom.position.set(1.45, 1.65, 0);
+      upperBoom.rotation.z = 0.15;
+
+      const gusset = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.18, 0.37), darkSteel);
+      gusset.position.set(0.85, 1.15, 0);
+      boomGroup.add(lowerBoom, upperBoom, gusset);
+
+      namedParts.boom = boomGroup;
+      machineRootGroup.add(boomGroup);
+
+      // 4. DIPPER ARM
+      const armGroup = new THREE.Group();
+      armGroup.name = "arm";
+
+      const armBeam = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.28, 0.28), orangePaint);
+      armBeam.position.set(2.45, 1.25, 0);
+      armBeam.rotation.z = -0.85;
+
+      const pinCap1 = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.36, 16), darkSteel);
+      pinCap1.rotation.x = Math.PI / 2;
+      pinCap1.position.set(1.8, 1.95, 0);
+      const pinCap2 = pinCap1.clone();
+      pinCap2.position.set(3.15, 0.55, 0);
+
+      armGroup.add(armBeam, pinCap1, pinCap2);
+      namedParts.arm = armGroup;
+      machineRootGroup.add(armGroup);
+
+      // 5. EXCAVATOR BUCKET
+      const bucketGroup = new THREE.Group();
+      bucketGroup.name = "bucket";
+
+      const bucketBody = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.48, 0.48, 0.65, 20, 1, false, 0, Math.PI * 1.18),
+        bucketSteel
+      );
+      bucketBody.position.set(3.2, -0.15, 0);
+      bucketBody.rotation.x = Math.PI / 2;
+      bucketBody.rotation.z = 0.8;
+
+      for (let i = 0; i < 5; i++) {
+        const tooth = new THREE.Mesh(new THREE.ConeGeometry(0.048, 0.18, 4), orangePaint);
+        tooth.position.set(3.55, -0.34, -0.26 + i * 0.13);
+        tooth.rotation.z = -1.22;
+        bucketGroup.add(tooth);
+      }
+
+      bucketGroup.add(bucketBody);
+      namedParts.bucket = bucketGroup;
+      machineRootGroup.add(bucketGroup);
+
+      // 6. HYDRAULIC CYLINDERS & CHROME PISTONS
+      const cylGroup = new THREE.Group();
+      cylGroup.name = "cylinders";
+
+      function createActuator(barrelLen, pistonLen, angleZ, posX, posY, posZ) {
+        const actGroup = new THREE.Group();
+        const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, barrelLen, 16), darkSteel);
+        const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.042, pistonLen, 16), chromePiston);
+        rod.position.set(0, (barrelLen + pistonLen) * 0.36, 0);
+        actGroup.add(barrel, rod);
+        actGroup.rotation.z = angleZ;
+        actGroup.position.set(posX, posY, posZ);
+        return actGroup;
+      }
+
+      const boomCyl = createActuator(1.15, 0.95, 0.75, 0.12, 0.38, 0);
+      const dipperCyl = createActuator(1.05, 0.85, -0.4, 1.45, 2.05, 0);
+      const bucketCyl = createActuator(0.95, 0.75, -1.0, 2.75, 0.8, 0);
+      const slewCylL = createActuator(0.65, 0.45, 1.57, -0.5, 0.05, 0.42);
+      const slewCylR = createActuator(0.65, 0.45, 1.57, -0.5, 0.05, -0.42);
+
+      const hoseCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-0.8, 0.9, 0.2),
+        new THREE.Vector3(0.2, 0.9, 0.22),
+        new THREE.Vector3(1.3, 1.8, 0.2)
+      ]);
+      const hoseGeo = new THREE.TubeGeometry(hoseCurve, 20, 0.02, 8, false);
+      const hoseMesh = new THREE.Mesh(hoseGeo, blackHoseMat);
+
+      cylGroup.add(boomCyl, dipperCyl, bucketCyl, slewCylL, slewCylR, hoseMesh);
+      namedParts.cylinders = cylGroup;
+      machineRootGroup.add(cylGroup);
+
+      // SHIFTED MACHINE POSITION TO CLEAR DOCKED LEFT CONSOLE COMPLETELY
+      machineRootGroup.position.set(0, -0.25, 0); // CLEANLY CENTERED MACHINE
+    }
+
+    function loadUserGLBModelIfExists() {
+      if (typeof THREE.GLTFLoader === 'undefined') return;
+      const loader = new THREE.GLTFLoader();
+      loader.load('model.glb', function (gltf) {
+        while(machineRootGroup.children.length > 0){ 
+          machineRootGroup.remove(machineRootGroup.children[0]); 
+        }
+        const loadedModel = gltf.scene;
+        loadedModel.scale.set(1.5, 1.5, 1.5);
+        machineRootGroup.add(loadedModel);
+        loadedModel.traverse((child) => {
+          if (child.isMesh) {
+            const n = child.name.toLowerCase();
+            if (n.includes("boom")) namedParts.boom = child;
+            else if (n.includes("arm") || n.includes("dipper")) namedParts.arm = child;
+            else if (n.includes("bucket")) namedParts.bucket = child;
+            else if (n.includes("cyl")) namedParts.cylinders = child;
+            else if (n.includes("stab") || n.includes("outrig")) namedParts.stabilizers = child;
+            else if (n.includes("mount") || n.includes("frame")) namedParts.mount = child;
+          }
+        });
+      }, undefined, function(){});
+    }
+
+    function setupScrollTriggerExplosion() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#scroll-track-trigger",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          onUpdate: (self) => {
+            explosionProgress = self.progress;
+            updateModelExplosion(explosionProgress);
+            updateSideRailActive(explosionProgress);
+          }
+        }
+      }).to(camera.position, { x: 7.4, y: 4.6, z: 8.8, ease: "none" }, 0);
+    }
+
+    function updateModelExplosion(progress) {
+      for (const [key, partGroup] of Object.entries(namedParts)) {
+        if (!partGroup) continue;
+        const vec = EXPLODE_VECTORS[key];
+        if (vec) {
+          partGroup.position.x = vec.x * progress;
+          partGroup.position.y = vec.y * progress;
+          partGroup.position.z = vec.z * progress;
+        }
+      }
+      updateLeaderLines(progress);
+    }
+
+    function updateSideRailActive(progress) {
+      const dots = document.querySelectorAll(".rail-step-dot");
+      const stageIndex = Math.min(5, Math.floor(progress * 6));
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === stageIndex);
+      });
+    }
+
+    function seekToStage(stageIndex) {
+      const targetY = (stageIndex / 5) * (document.getElementById("scroll-track-trigger").offsetHeight);
+      const stageElem = document.getElementById("models-3d-stage");
+      const offsetTop = stageElem.offsetTop + targetY;
+      if (lenis) lenis.scrollTo(offsetTop);
+      else window.scrollTo({ top: offsetTop, behavior: "smooth" });
+    }
+
+    function updateLeaderLines(progress) {
+      const svg = document.getElementById("leader-lines-svg");
+      const canvas = document.getElementById("three-canvas");
+      if (!svg || !canvas) return;
+
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      let svgHTML = "";
+      const shouldShowLabels = progress > 0.18;
+
+      for (const [key, partGroup] of Object.entries(namedParts)) {
+        const labelElem = document.getElementById(`label-${key}`);
+        if (!partGroup || !labelElem) continue;
+
+        if (!shouldShowLabels) {
+          labelElem.classList.remove("visible");
+          continue;
+        }
+
+        const worldPos = new THREE.Vector3();
+        partGroup.getWorldPosition(worldPos);
+        const screenPos = worldPos.clone().project(camera);
+
+        const x2d = (screenPos.x * 0.5 + 0.5) * width;
+        const y2d = (-(screenPos.y * 0.5) + 0.5) * height;
+
+        labelElem.classList.add("visible");
+        const isRightSide = x2d > width * 0.5;
+        const labelTargetX = isRightSide ? Math.min(width - 270, x2d + 80) : Math.max(380, x2d - 260); // Clamped outside left console!
+        const labelTargetY = Math.max(100, Math.min(height - 120, y2d));
+
+        labelElem.style.left = `${labelTargetX}px`;
+        labelElem.style.top = `${labelTargetY}px`;
+
+        const anchorX = isRightSide ? labelTargetX : labelTargetX + 250;
+        const anchorY = labelTargetY;
+
+        svgHTML += `
+          <circle cx="${x2d}" cy="${y2d}" r="4" fill="#F58A1F" />
+          <path d="M ${x2d} ${y2d} L ${(x2d + anchorX)/2} ${anchorY} L ${anchorX} ${anchorY}" 
+                stroke="#F58A1F" stroke-width="1.5" stroke-dasharray="3,3" fill="none" opacity="0.85" />
+        `;
+      }
+      svg.innerHTML = svgHTML;
+    }
+
+    /* Raycasting */
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function setupRaycasting() {
+      const canvas = document.getElementById("three-canvas");
+      if (!canvas) return;
+
+      canvas.addEventListener("click", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(machineRootGroup.children, true);
+
+        if (intersects.length > 0) {
+          let hitObject = intersects[0].object;
+          let matchedKey = null;
+
+          while (hitObject && hitObject !== machineRootGroup) {
+            for (const [key, partGroup] of Object.entries(namedParts)) {
+              if (hitObject === partGroup) {
+                matchedKey = key;
+                break;
+              }
+            }
+            if (matchedKey) break;
+            hitObject = hitObject.parent;
+          }
+
+          if (matchedKey) focusPart(matchedKey);
+        }
+      });
+    }
+
+    function focusPart(partKey) {
+      selectedPartKey = partKey;
+      const data = PART_SPECS_DATA[partKey];
+      if (!data) return;
+
+      for (const [key, partGroup] of Object.entries(namedParts)) {
+        if (!partGroup) continue;
+        partGroup.traverse((child) => {
+          if (child.isMesh && child.material) {
+            if (key === partKey) {
+              child.material.emissive = new THREE.Color(0xF58A1F);
+              child.material.emissiveIntensity = 0.55;
+              child.material.transparent = false;
+              child.material.opacity = 1.0;
+            } else {
+              child.material.emissive = new THREE.Color(0x000000);
+              child.material.transparent = true;
+              child.material.opacity = 0.3;
+            }
+          }
+        });
+      }
+
+      document.getElementById("drawer-part-code").innerText = data.code;
+      document.getElementById("drawer-part-title").innerText = data.title;
+      document.getElementById("drawer-part-desc").innerText = data.desc;
+
+      const specList = document.getElementById("drawer-specs-container");
+      specList.innerHTML = "";
+      data.specs.forEach(s => {
+        const li = document.createElement("li");
+        li.className = "drawer-spec-row";
+        li.innerHTML = `<span class="lbl">${s.lbl}</span><span class="val">${s.val}</span>`;
+        specList.appendChild(li);
+      });
+
+      document.getElementById("part-detail-drawer").classList.add("open");
+    }
+
+    function closePartDrawer() {
+      document.getElementById("part-detail-drawer").classList.remove("open");
+      selectedPartKey = null;
+
+      for (const [key, partGroup] of Object.entries(namedParts)) {
+        if (!partGroup) continue;
+        partGroup.traverse((child) => {
+          if (child.isMesh && child.material) {
+            child.material.emissive = new THREE.Color(0x000000);
+            child.material.transparent = false;
+            child.material.opacity = 1.0;
+          }
+        });
+      }
+    }
+
+    /* Clean 3D View Toggle (No Intrusion on Model) */
+    function toggleClean3DMode() {
+      document.body.classList.toggle("clean-3d-mode");
+      const btn = document.getElementById("clean-view-btn");
+      if (document.body.classList.contains("clean-3d-mode")) {
+        btn.classList.add("active");
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Show Specs Panel`;
+      } else {
+        btn.classList.remove("active");
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Clean 3D View`;
+      }
+    }
+
+    
+    // =========================================================================
+    // FACTORY CAD DATA DEFINITIONS (MODELS 1 - 7)
+    // =========================================================================
+    const CAD_MODELS_DATA = [
+      {
+        id: "m1", num: 1, file: "MODEL1.jpeg",
+        title: "Model 1: 3-Point Hitch Subframe & Mounting Geometry",
+        shortTitle: "Model 1 (Subframe)",
+        badge: "SUBFRAME CAT-II / CAT-III",
+        desc: "Rigid tractor-locking subframe distributing mechanical digging loads directly into the tractor rear axle housing, bypassing 3-point lift arm strain.",
+        specs: [
+          { lbl: "Hitch Category", val: "CAT-II / CAT-III" },
+          { lbl: "Lower Hitch Pin Span", val: "825 mm Span" },
+          { lbl: "Top Mast Triangulation", val: "620 mm Height" },
+          { lbl: "Hardened Pin Diameters", val: "Ø28 mm / Ø32 mm" },
+          { lbl: "Chassis Locking", val: "Dual Under-Axle Brackets" },
+          { lbl: "Tractor Rating", val: "45 HP - 90 HP" }
+        ]
+      },
+      {
+        id: "m2", num: 2, file: "MODEL2.jpeg",
+        title: "Model 2: Articulation Kinematics & Angular Reach Envelope",
+        shortTitle: "Model 2 (Kinematics)",
+        badge: "ARTICULATION ENVELOPE",
+        desc: "Dynamic geometry showing maximum boom crowd, dipper stick elevation, and bucket wrist articulation throughout the complete digging cycle.",
+        specs: [
+          { lbl: "Boom Travel Arc", val: "155° Range" },
+          { lbl: "Dipper Arm Arc", val: "165° Angular Reach" },
+          { lbl: "Bucket Rotation Angle", val: "180° Full Curl" },
+          { lbl: "Max Digging Depth", val: "2,850 mm (2.85 m)" },
+          { lbl: "Max Operating Height", val: "3,420 mm (3.42 m)" },
+          { lbl: "Breakout Crowd Force", val: "2,150 kgf" }
+        ]
+      },
+      {
+        id: "m3", num: 3, file: "MODEL3.jpeg",
+        title: "Model 3: Top Overhead Plan & Trench Alignment",
+        shortTitle: "Model 3 (Top Plan)",
+        badge: "OVERHEAD PLAN & TRENCH",
+        desc: "Top orthographic view detailing centerline digging symmetry, tractor wheel tracking, and trench wall clearances for canal excavations.",
+        specs: [
+          { lbl: "Centerline Alignment", val: "0 mm (True Center)" },
+          { lbl: "Standard Bucket Width", val: "450 mm (3-Teeth)" },
+          { lbl: "Optional Buckets", val: "300 mm / 600 mm / 900 mm" },
+          { lbl: "Transport Profile Width", val: "1,800 mm" },
+          { lbl: "Operating Stance Width", val: "2,200 mm" },
+          { lbl: "Overhead Slew Radius", val: "950 mm Compact Swing" }
+        ]
+      },
+      {
+        id: "m4", num: 4, file: "MODEL4.jpeg",
+        title: "Model 4: True Side Elevation & Critical Digging Depths",
+        shortTitle: "Model 4 (Side Elevation)",
+        badge: "ELEVATION & REACH",
+        desc: "Master dimensional elevation specifying primary field benchmarks: 2.85m dig depth, 3.85m slew reach, and 2.4m high-spoil loading clearance.",
+        specs: [
+          { lbl: "Max Digging Depth", val: "2,850 mm (2.85 m / 9.35 ft)" },
+          { lbl: "Max Slew Reach", val: "3,850 mm (3.85 m / 12.63 ft)" },
+          { lbl: "Max Dump Clearance", val: "2,400 mm (2.40 m / 7.87 ft)" },
+          { lbl: "Boom Transport Height", val: "2,250 mm" },
+          { lbl: "Ground Clearance", val: "420 mm under Kingpost" },
+          { lbl: "Bucket Digging Force", val: "3,200 kgf" }
+        ]
+      },
+      {
+        id: "m5", num: 5, file: "MODEL5.jpeg",
+        title: "Model 5: Stabilizer Stance Spread & Ground Levelling",
+        shortTitle: "Model 5 (Outriggers)",
+        badge: "STABILIZER STANCE SPREAD",
+        desc: "Engineering stance blueprint detailing 2.2-meter hydraulic outrigger spread with independent dual leveling rams and anti-sink footpads.",
+        specs: [
+          { lbl: "Deployed Stance Width", val: "2,200 mm (2.20 m)" },
+          { lbl: "Retracted Transport Width", val: "1,800 mm Track" },
+          { lbl: "Hydraulic Level Stroke", val: "350 mm Per Side" },
+          { lbl: "Steel Footpad Dimensions", val: "250 x 250 mm Anti-Sink" },
+          { lbl: "Safety Lock Mechanism", val: "Dual Pilot Check Valves" },
+          { lbl: "Lateral Stability Arc", val: "180° Full Swing Load" }
+        ]
+      },
+      {
+        id: "m6", num: 6, file: "MODEL6.jpeg",
+        title: "Model 6: Full Isometric 3D Mechanical Assembly",
+        shortTitle: "Model 6 (Isometric)",
+        badge: "ISOMETRIC ASSEMBLY",
+        desc: "3D axonometric technical drawing illustrating heavy-duty fabricated structural weldments, hydraulic manifold, and pin hinge junctions.",
+        specs: [
+          { lbl: "Fabrication Steel Grade", val: "High-Yield Q345B" },
+          { lbl: "Cutting Edge Steel", val: "Hardox 450 Manganese Teeth" },
+          { lbl: "Hydraulic System Rating", val: "210 BAR (3,045 PSI)" },
+          { lbl: "Boom Construction", val: "Curved Deep-Box Beam" },
+          { lbl: "Attachment Total Weight", val: "1,850 kg Operating" },
+          { lbl: "Hydraulic Reservoir", val: "Integrated 45L Oil Tank" }
+        ]
+      },
+      {
+        id: "m7", num: 7, file: "MODEL7.jpeg",
+        title: "Model 7: Dual-Cylinder Slew Kingpost Hub & Pivot",
+        shortTitle: "Model 7 (Slew Hub)",
+        badge: "180° SLEW HUB",
+        desc: "Heavy-duty cast ductile iron kingpost assembly driven by twin hydraulic slew cylinders providing 180° smooth bi-directional backhoe swing.",
+        specs: [
+          { lbl: "Slew Rotation Range", val: "180° Continuous Arc" },
+          { lbl: "Hydraulic Slew Torque", val: "4,200 Nm Breakout Torque" },
+          { lbl: "Main Pivot Pin", val: "Ø50 mm Hardened 42CrMo4" },
+          { lbl: "Bushing Material", val: "Spherical Phosphor Bronze" },
+          { lbl: "Grease Distribution", val: "Multi-Port External Nipples" },
+          { lbl: "Swing Cushioning", val: "End-of-Stroke Deceleration" }
+        ]
+      }
+    ];
+
+    let activeCADIndex = 0;
+    let currentCADZoom = { split: 1.0, main: 1.0 };
+    let isAutoRotating = false;
+    let isWireframeMode = false;
+
+    // Switch View Modes: '3d-clean' (full 3D) vs 'split' (50/50 3D + CAD) vs 'cad-full'
+    function setStageViewMode(mode) {
+      const wrap = document.getElementById("three-viewport-wrap");
+      const btn3d = document.getElementById("btn-mode-3d");
+      const btnSplit = document.getElementById("btn-mode-split");
+
+      if (mode === '3d-clean') {
+        wrap.classList.remove("split-active");
+        btn3d.classList.add("active");
+        btnSplit.classList.remove("active");
+      } else if (mode === 'split') {
+        wrap.classList.add("split-active");
+        btn3d.classList.remove("active");
+        btnSplit.classList.add("active");
+        selectCADModel(activeCADIndex, 'split');
+      }
+
+      // Resize Three.js renderer smoothly to new container width
+      setTimeout(() => {
+        const canvas = document.getElementById("three-canvas");
+        if (renderer && camera && canvas) {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        }
+      }, 60);
+    }
+
+    function scrollToCADSection() {
+      const sec = document.getElementById("cad-dimensions-section");
+      if (sec) {
+        if (lenis) lenis.scrollTo(sec);
+        else sec.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Select CAD Model (0 to 6)
+    function selectCADModel(index, target = 'both') {
+      activeCADIndex = index;
+      const data = CAD_MODELS_DATA[index];
+      if (!data) return;
+
+      // Update Split Pane if target is 'split' or 'both'
+      if (target === 'split' || target === 'both') {
+        const splitImg = document.getElementById("split-cad-img");
+        const splitTitle = document.getElementById("split-cad-title");
+        const splitBadge = document.getElementById("split-cad-badge");
+        const splitDesc = document.getElementById("split-cad-desc");
+        const splitSpecs = document.getElementById("split-cad-specs");
+
+        if (splitImg) splitImg.src = data.file;
+        if (splitTitle) splitTitle.innerText = data.title;
+        if (splitBadge) splitBadge.innerText = data.badge;
+        if (splitDesc) splitDesc.innerText = data.desc;
+
+        if (splitSpecs) {
+          splitSpecs.innerHTML = data.specs.map((sp, idx) => `
+            <div class="cad-spec-chip ${idx % 2 === 0 ? 'accent-orange' : ''}">
+              <div class="cad-spec-val">${sp.val}</div>
+              <div class="cad-spec-lbl">${sp.lbl}</div>
+            </div>
+          `).join("");
+        }
+
+        const splitTabs = document.querySelectorAll("#split-cad-tabs .cad-tab-item");
+        splitTabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
+      }
+
+      // Update Main Section 3 if target is 'main' or 'both'
+      if (target === 'main' || target === 'both') {
+        const mainImg = document.getElementById("main-cad-img");
+        const mainTitle = document.getElementById("main-cad-title");
+        const mainBadge = document.getElementById("main-cad-badge");
+        const mainDesc = document.getElementById("main-cad-desc");
+        const mainSpecs = document.getElementById("main-cad-specs");
+
+        if (mainImg) mainImg.src = data.file;
+        if (mainTitle) mainTitle.innerText = data.title;
+        if (mainBadge) mainBadge.innerText = data.badge;
+        if (mainDesc) mainDesc.innerText = data.desc;
+
+        if (mainSpecs) {
+          mainSpecs.innerHTML = data.specs.map((sp, idx) => `
+            <div class="cad-spec-chip ${idx % 2 === 0 ? 'accent-orange' : ''}">
+              <div class="cad-spec-val">${sp.val}</div>
+              <div class="cad-spec-lbl">${sp.lbl}</div>
+            </div>
+          `).join("");
+        }
+
+        const mainTabs = document.querySelectorAll("#main-cad-tabs .cad-tab-item");
+        mainTabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
+      }
+    }
+
+    // Zoom Controls on CAD Blueprint (+ / - / Reset)
+    function zoomCADBlueprint(pane, delta) {
+      if (delta === 0) currentCADZoom[pane] = 1.0;
+      else currentCADZoom[pane] = Math.max(0.8, Math.min(3.0, currentCADZoom[pane] + delta));
+
+      const imgEl = pane === 'split' ? document.getElementById("split-cad-img") : document.getElementById("main-cad-img");
+      if (imgEl) {
+        imgEl.style.transform = `scale(${currentCADZoom[pane]})`;
+      }
+    }
+
+    function openActiveCADInLightbox(pane) {
+      const data = CAD_MODELS_DATA[activeCADIndex];
+      if (data) {
+        openMediaLightbox('image', data.file, data.title, data.desc);
+      }
+    }
+
+    // Explode Scrubber Slider (0% to 100%)
+    function onExplodeSliderInput(val) {
+      const progress = parseFloat(val) / 100;
+      document.getElementById("scrub-val-pct").innerText = `${Math.round(val)}%`;
+      updateModelExplosion(progress);
+
+      const tel = document.getElementById("telemetry-txt");
+      if (tel) {
+        if (progress === 0) tel.innerText = "STATUS: ASSEMBLED // DRAG TO ROTATE 3D MACHINE";
+        else if (progress < 0.3) tel.innerText = "STAGE 01: STABILIZER & SUBFRAME LINKAGE SEPARATION";
+        else if (progress < 0.6) tel.innerText = "STAGE 02: MAIN ARCHED BOOM & HYDRAULIC CYLINDERS EXPANSION";
+        else if (progress < 0.9) tel.innerText = "STAGE 03: DIPPER ARM & BUCKET ARTICULATION DETACHMENT";
+        else tel.innerText = "STAGE 04: FULL CAD EXPLODED SUB-ASSEMBLY VIEW (100%)";
+      }
+    }
+
+    // Auto-Rotate 3D machine
+    function toggleAutoRotate() {
+      isAutoRotating = !isAutoRotating;
+      const btn = document.getElementById("btn-auto-rotate");
+      if (btn) btn.classList.toggle("active", isAutoRotating);
+    }
+
+    // Reset Camera view to clean centered perspective
+    function reset3DCamera() {
+      if (!camera || !controls) return;
+      gsap.to(camera.position, {
+        x: 6.2,
+        y: 3.0,
+        z: 6.8,
+        duration: 0.9,
+        ease: "power2.out",
+        onUpdate: () => controls.update()
+      });
+      controls.target.set(0, 0.35, 0);
+    }
+
+    // Wireframe Mode Toggle
+    function toggleWireframe() {
+      isWireframeMode = !isWireframeMode;
+      const btn = document.getElementById("btn-wireframe");
+      if (btn) btn.classList.toggle("active", isWireframeMode);
+
+      if (machineRootGroup) {
+        machineRootGroup.traverse((child) => {
+          if (child.isMesh && child.material) {
+            child.material.wireframe = isWireframeMode;
+          }
+        });
+      }
+    }
+
+function switchModel(index) {
+      if (index === currentModelIndex) return;
+      currentModelIndex = index;
+      const m = MACHINE_MODELS[index];
+
+      document.getElementById("current-model-tag").innerText = m.tag;
+      document.getElementById("current-model-title").innerText = m.name;
+      document.getElementById("current-model-tagline").innerText = m.tagline;
+
+      animateCounter("cnt-power", m.specs.power);
+      animateCounter("cnt-weight", m.specs.weight);
+      animateCounter("cnt-bucket", m.specs.bucket, 2);
+      animateCounter("cnt-depth", m.specs.depth, 2);
+
+      if (camera && controls) {
+        gsap.to(camera.position, {
+          x: 6.8 + (index * 0.4),
+          y: 3.2,
+          z: 7.6,
+          duration: 1.0,
+          ease: "power2.out",
+          onUpdate: () => controls.update()
+        });
+      }
+    }
+
+    function animateCounter(elemId, targetVal, decimals = 0) {
+      const el = document.getElementById(elemId);
+      if (!el) return;
+      const startVal = parseFloat(el.innerText.replace(/,/g, '')) || 0;
+      const obj = { val: startVal };
+
+      gsap.to(obj, {
+        val: targetVal,
+        duration: 0.9,
+        ease: "power2.out",
+        onUpdate: () => {
+          if (decimals > 0) el.innerText = obj.val.toFixed(decimals);
+          else el.innerText = Math.round(obj.val).toLocaleString();
+        }
+      });
+    }
+
+    function preselectModelInForm() {
+      const currentModel = MACHINE_MODELS[currentModelIndex];
+      const modelSelect = document.getElementById("req-model");
+      if (modelSelect) {
+        for (let i = 0; i < modelSelect.options.length; i++) {
+          if (modelSelect.options[i].text.includes(currentModel.name) || modelSelect.options[i].value.includes(currentModel.name)) {
+            modelSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      const formSection = document.getElementById("requirements-section");
+      if (formSection) {
+        if (lenis) lenis.scrollTo(formSection);
+        else formSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    function downloadSpecBrochure() {
+      const currentModel = MACHINE_MODELS[currentModelIndex];
+      alert(`[BROCHURE DOWNLOAD]\n\nStarting download for: ${currentModel.name} (Variant : Stredo) Technical Specifications Brochure.`);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (controls) controls.update();
+
+      if (isAutoRotating && machineRootGroup) { machineRootGroup.rotation.y += 0.008; }
+      else if (explosionProgress === 0 && machineRootGroup) {
+        machineRootGroup.rotation.y = Math.sin(Date.now() * 0.0006) * 0.04;
+      }
+
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+
+      if (explosionProgress > 0.18) {
+        updateLeaderLines(explosionProgress);
+      }
+    }
+
+    function onWindowResize() {
+      const canvas = document.getElementById("three-canvas");
+      if (!canvas || !renderer || !camera) return;
+
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+      if (explosionProgress > 0.18) {
+        updateLeaderLines(explosionProgress);
+      }
+    }
+
+    /* Media Lightbox */
+    function openMediaLightbox(type, mediaSrc, titleName, descText) {
+      const modal = document.getElementById("lightbox-modal");
+      const titleEl = document.getElementById("lightbox-title");
+      const labelTagEl = document.getElementById("lightbox-label-tag");
+      const descEl = document.getElementById("lightbox-desc");
+      const mediaBox = document.getElementById("lightbox-media-box");
+
+      titleEl.innerText = titleName;
+      labelTagEl.innerText = `ASSET: ${mediaSrc}`;
+      descEl.innerText = descText;
+
+      if (type === 'video') {
+        mediaBox.innerHTML = `
+          <video controls autoplay playsinline style="max-height:65vh;width:100%;border-radius:8px;">
+            <source src="${mediaSrc}" type="video/mp4">
+          </video>
+        `;
+      } else {
+        mediaBox.innerHTML = `
+          <img src="${mediaSrc}" alt="${titleName}" style="max-height:65vh;max-width:100%;object-fit:contain;border-radius:8px;">
+        `;
+      }
+
+      modal.classList.add("active");
+    }
+
+    function closeMediaLightbox(e) {
+      if (e && e.target && e.target.classList.contains("lightbox-content")) return;
+      const modal = document.getElementById("lightbox-modal");
+      const mediaBox = document.getElementById("lightbox-media-box");
+      if (mediaBox) {
+        const vid = mediaBox.querySelector("video");
+        if (vid) vid.pause();
+        mediaBox.innerHTML = "";
+      }
+      if (modal) modal.classList.remove("active");
+    }
+
+    /* Requirements Form */
+    function getFormData() {
+      return {
+        name: document.getElementById("req-name").value.trim(),
+        company: document.getElementById("req-company").value.trim() || "Not specified",
+        phone: document.getElementById("req-phone").value.trim(),
+        email: document.getElementById("req-email").value.trim(),
+        location: document.getElementById("req-location").value.trim(),
+        model: document.getElementById("req-model").value,
+        workType: document.getElementById("req-work").value,
+        quantity: document.getElementById("req-quantity").value,
+        timeline: document.getElementById("req-timeline").value,
+        intent: document.getElementById("req-intent").value,
+        message: document.getElementById("req-message").value.trim() || "None"
+      };
+    }
+
+    function validateForm(data) {
+      let isValid = true;
+      const grpName = document.getElementById("grp-name");
+      if (!data.name) { grpName.classList.add("has-error"); isValid = false; } else { grpName.classList.remove("has-error"); }
+
+      const grpPhone = document.getElementById("grp-phone");
+      const phoneDigits = data.phone.replace(/\D/g, "");
+      if (phoneDigits.length < 10) { grpPhone.classList.add("has-error"); isValid = false; } else { grpPhone.classList.remove("has-error"); }
+
+      const grpEmail = document.getElementById("grp-email");
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) { grpEmail.classList.add("has-error"); isValid = false; } else { grpEmail.classList.remove("has-error"); }
+
+      const grpLocation = document.getElementById("grp-location");
+      if (!data.location) { grpLocation.classList.add("has-error"); isValid = false; } else { grpLocation.classList.remove("has-error"); }
+
+      return isValid;
+    }
+
+    function sendOnWhatsApp() {
+      const data = getFormData();
+      if (!validateForm(data)) {
+        alert("Please complete the required fields (Name, Phone, Email, Location) before sending on WhatsApp.");
+        return;
+      }
+
+      const waText = 
+`*AGROSTEED INDUSTRIES PVT. LTD — REQUIREMENT ENQUIRY*
+*Variant : Stredo*
+------------------------------------------------
+*Customer Name:* ${data.name}
+*Company / Farm:* ${data.company}
+*Phone:* ${data.phone}
+*Email:* ${data.email}
+*Location:* ${data.location}
+------------------------------------------------
+*Machine Model:* ${data.model}
+*Type of Work:* ${data.workType}
+*Quantity Required:* ${data.quantity}
+*Purchase Timeline:* ${data.timeline}
+*Requirement Type:* ${data.intent}
+------------------------------------------------
+*Tractor / Project Specs:*
+${data.message}`;
+
+      const waUrl = `https://wa.me/918608962057?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, "_blank");
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const data = getFormData();
+      if (!validateForm(data)) return;
+
+      const randomId = "ASI-REQ-" + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById("receipt-id").innerText = randomId;
+      document.getElementById("form-success-banner").classList.add("active");
+      document.getElementById("form-success-banner").scrollIntoView({ behavior: "smooth" });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initThreeEngine();
+      setupScrollTriggerExplosion();
+      selectCADModel(0, 'both');
+    });
+  </script>
+</body>
+</html>
